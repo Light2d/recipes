@@ -1,0 +1,80 @@
+{% load static %}
+{% load i18n %}
+
+<!-- admin_chat.html -->
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<body>
+    <div class="chat__body">
+        <div class="admin__chat">
+            <h1 class="chat__title">Chat with {{ chat.user.username }}</h1>
+            <div id="chat-window">
+                {% for message in messages %}
+                    <div class="message-item {% if message.sender == user %}sent{% else %}received{% endif %}">
+                        <strong>{{ message.sender.username }}:</strong> {{ message.text }}
+                    </div>
+                {% endfor %}
+            </div>
+            <form id="message-form" method="post">
+                {% csrf_token %}
+                {{ form.text }} 
+                <button class="admin_button" type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const messageForm = document.getElementById('message-form');
+        const chatWindow = document.getElementById('chat-window');
+    
+        messageForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(messageForm);
+            
+            fetch(messageForm.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const newMessages = document.createElement('div');
+                newMessages.innerHTML = data.html;
+                
+                const newMessageItems = newMessages.querySelectorAll('.message-item');
+                newMessageItems.forEach(item => chatWindow.appendChild(item));
+    
+                messageForm.reset();
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            })
+            .catch(error => console.log('Ошибка:', error));
+        });
+    
+        function loadMessages() {
+            fetch(window.location.href, {
+                method: 'GET',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                const newMessages = document.createElement('div');
+                newMessages.innerHTML = data.html;
+    
+                chatWindow.innerHTML = newMessages.querySelector('#chat-window').innerHTML;
+                chatWindow.scrollTop = chatWindow.scrollHeight;
+            })
+            .catch(error => console.log('Ошибка при обновлении сообщений:', error));
+        }
+    
+        setInterval(loadMessages, 5000);
+    });
+    
+</script>
+</body>
+

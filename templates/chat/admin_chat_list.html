@@ -1,0 +1,21 @@
+{% load static %}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <title>Admin Chats</title>
+</head>
+<body>
+    <h1 class="list__title">All Chats</h1>
+    <ul class="chat-list">
+        {% for chat in chats %}
+            <li class="chat-item">
+                <a href="{% url 'admin_chat_view' chat.id %}">Chat with {{ chat.user.username }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

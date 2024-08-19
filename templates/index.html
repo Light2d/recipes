@@ -1,0 +1,202 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Home</title>
+</head>
+<body>
+    <header class="header">
+        <div class="header__container container">
+            <div class="header__items">
+                <div class="header__item">
+                    <a href="#" class="header__logo ">
+                        <img src="{% static 'img/header/logo.png' %}" alt="">
+                    </a>
+                </div>
+                <div class="header__item header__search">
+                    <input type="text" class="search" placeholder="Search for recipes">
+                    <button class="search__btn">Search</button>
+                </div>
+                <div class="header__item header__links">
+                    <a href="#" class="header__link">
+                        <img src="{% static 'img/header/profile.svg' %}" alt="support">
+                        <div>Profile</div>
+                    </a>
+                    <a href="#" class="header__link">
+                        <img src="{% static 'img/header/support.svg' %}" alt="support">
+                        <div>Support</div>
+                    </a>
+                    <a href="#" class="header__link">
+                        <img src="{% static 'img/header/fav.svg' %}" alt="support">
+                        <div>Favorites</div>
+                    </a>
+                    <a href="#" class="header__link">
+                        <img src="{% static 'img/header/about.svg' %}" alt="support">
+                        <div>About us</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="intro">
+        <div class="intro__container container">
+            <div class="intro__suptitle">- The theme of August</div>
+            <div class="intro__title">The 100 best <br> recipes of the XXI century</div>
+            <button class="intro__btn">
+                Watch
+            </button>
+        </div>
+    </div>
+    <div class="articles">
+        <div class="articles__container container">
+            <div class="articles__name">
+                More than 1210 recipes
+            </div>
+            <div class="articles__items">
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+                <a href="#" class="article__item">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
+                    <div class="article__title">
+                        Trout steak with spinach in cream sauce
+                    </div>
+                    <div class="article__date">
+                        August
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- CHAT -->
+    <div id="chatWindow" class="chat-window">
+        <div class="chat-header">
+            <h5>Support</h5>
+            <button id="closeChat" class="close-btn">&times;</button>
+        </div>
+        <div id="chatBody" class="chat-body">
+            {% for message in messages %}
+                <p class="chatMessage"><strong>{{ message.sender.username }}:</strong> {{ message.text }} <small>{{ message.timestamp }}</small></p>
+            {% endfor %}
+        </div>
+        <form method="post" id="message-form">
+            {% csrf_token %}
+            {{ form.text }} 
+            <button type="submit" class="send-btn">Send</button>
+        </form>
+    </div>
+    <button id="openChat" class="open-btn">Support</button>
+
+     <!-- CHAT -->
+
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'script/app.js' %}"></script>
+    <script>
+        $(document).ready(function() {
+            // Обновление чата каждые 5 секунд
+            setInterval(loadChat, 5000);
+        
+            // Функция загрузки сообщений чата с сервера
+            function loadChat() {
+                $.ajax({
+                    url: '{% url "chat_view" %}', // URL для получения сообщений
+                    method: 'GET',
+                    success: function(response) {
+                        $('#chatBody').html(response.html); // Обновление содержимого окна чата
+                    }
+                });
+            }
+        
+            // Обработка отправки формы через AJAX
+            $('#message-form').submit(function(event) {
+                event.preventDefault(); // Предотвращение стандартной отправки формы
+                $.ajax({
+                    url: '{% url "chat_view" %}', // URL для отправки сообщений
+                    method: 'POST',
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#chatBody').html(response.html); // Обновление сообщений в чате
+                        $('#message-form')[0].reset(); // Сброс формы
+                    }
+                });
+            });
+        
+            // Закрытие чат-окна
+            $('#closeChat').click(function() {
+                $('#chatWindow').hide(); // Скрытие контейнера чата
+            });
+        
+            // Открытие чат-окна
+            $('#openChat').click(function() {
+                $('#chatWindow').show(); // Показать контейнер чата
+            });
+        });
+        </script>
+</body>
+</html>

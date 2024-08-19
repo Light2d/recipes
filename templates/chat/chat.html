@@ -1,0 +1,20 @@
+{% load static %}
+{% load i18n %}
+
+
+
+{% block content %}
+<h2>Чат с администратором</h2>
+<div id="chat-window">
+    {% for message in messages %}
+        <p><strong>{{ message.sender.username }}:</strong> {{ message.text }} <small>{{ message.timestamp }}</small></p>
+    {% endfor %}
+</div>
+<form method="post" id="message-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Отправить</button>
+</form>
+{% endblock %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
