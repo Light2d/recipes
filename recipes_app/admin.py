@@ -1,3 +1,25 @@
 from django.contrib import admin
+from .models import CustomUser, Message, Article, Chat
 
-# Register your models here.
+class MessageAdmin(admin.ModelAdmin):
+    list_display = ('chat', 'sender', 'text', 'timestamp')
+    search_fields = ('sender__username', 'text')
+    list_filter = ('chat', 'sender', 'timestamp')
+
+class MessageInline(admin.TabularInline):
+    model = Message
+    extra = 1  # Определяет количество дополнительных пустых форм для сообщений в интерфейсе
+
+class ChatAdmin(admin.ModelAdmin):
+    list_display = ('user', 'admin', 'created_at')  # Поля для отображения в списке чатов
+    list_filter = ('admin', 'created_at')  # Фильтры для администрирования
+    search_fields = ('user__username', 'admin__username')  # Поля для поиска
+    inlines = [MessageInline]  # Встраивание сообщений в интерфейс чата
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ('name', 'date')
+    
+    
+admin.site.register(Article, ArticleAdmin)
+admin.site.register(Message, MessageAdmin)
+admin.site.register(Chat, ChatAdmin)

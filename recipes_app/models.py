@@ -30,3 +30,14 @@ class Message(models.Model):
         # Проверка на наличие sender
         sender_username = self.sender.username if self.sender else "Unknown Sender"
         return f"Message from {sender_username} in chat {self.chat.id}"
+
+class Article(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    theme = models.TextField()
+    image = models.ImageField(upload_to='articles/images/')
+    background = models.ImageField(upload_to='articles/images/')
+    date = models.DateField()
+
+    def __str__(self):
+        return self.name

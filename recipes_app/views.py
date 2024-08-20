@@ -4,7 +4,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import MessageForm
-from .models import Chat
+from .models import Chat, Article, CustomUser
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 
@@ -46,9 +46,10 @@ def user_login(request):
         form = UserLoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
-@login_required
+
 def index(request):
     user = request.user
+    articles = Article.objects.filter()
     chat, created = Chat.objects.get_or_create(user=request.user)
     
     form = MessageForm()  
@@ -56,6 +57,7 @@ def index(request):
     context = {
         'form': form,
         'messages': messages,
+        'articles': articles,
     }
     
     return render(request, "index.html", context)
@@ -139,3 +141,16 @@ def admin_chat_view(request, chat_id):
 def admin_chat_list_view(request):
     chats = Chat.objects.all()
     return render(request, 'chat/admin_chat_list.html', {'chats': chats})
+
+
+def article(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    articles = Article.objects.filter()
+    return render(request, 'article.html', {'article': article, 'articles': articles})
+
+def profile(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    context = {
+        'user': user,
+    }
+    return render(request, 'profile.html', context)

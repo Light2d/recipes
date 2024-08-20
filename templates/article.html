@@ -1,0 +1,43 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% include 'header.html' %}
+
+<div class="article">
+    <style>
+        .article__intro{
+            background: url("{{ article.background.url }}");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
+    <div class="article__intro">
+        <div class="article__container container">
+            <div class="article__suptitle">
+                {{ article.theme }}
+            </div>
+            <div class="article__title">
+                {{ article.name }}
+            </div>
+        </div>
+    </div>
+    <div class="article__content">
+        <div class="article__text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum molestiae quod ea porro nisi. Odio doloremque beatae pariatur eum eaque a. Quidem explicabo, tenetur autem soluta voluptate neque deleniti repellendus optio illo a laboriosam excepturi veritatis ad velit fuga? Laudantium vero voluptas sint ut totam dolorum, possimus numquam quo animi voluptatem tempore. Totam pariatur non optio maxime sit esse ab modi repellat vitae sequi deleniti harum, assumenda amet hic blanditiis unde temporibus veniam. Laboriosam quas quos eos itaque! Voluptas obcaecati repellendus accusantium odit rerum perferendis, minus tempora quo omnis atque, similique cum minima tempore neque sapiente nam. Illum sunt, nihil rerum fugiat excepturi fugit ducimus possimus quas? Voluptatibus nam blanditiis incidunt numquam, at, facere tenetur eveniet alias saepe voluptates quos eaque aut quis ut labore itaque porro ea, necessitatibus maiores? Repellat cupiditate quo ratione soluta at esse. At aspernatur assumenda natus, dolores quibusdam laborum consequatur numquam repudiandae culpa perspiciatis maiores enim ratione nulla magni quo error alias quidem? Eos ut eius placeat adipisci libero rem accusamus, ipsa unde? Ad exercitationem, quis voluptas aliquam laudantium sequi necessitatibus delectus laborum distinctio architecto suscipit temporibus soluta modi veritatis nostrum. Minus explicabo et, animi vero, architecto aut sit voluptatibus aspernatur sequi suscipit vitae esse?
+        </div>
+        <div class="article__imgs">
+            <div class="article__img">
+                <img src="{% static 'img/articles/1.jpg' %}" alt="">
+            </div>
+            <div class="article__img">
+                <img src="{% static 'img/articles/1.jpg' %}" alt="">
+            </div>
+            <div class="article__img">
+                <img src="{% static 'img/articles/1.jpg' %}" alt="">
+            </div>
+            <div class="article__img">
+                <img src="{% static 'img/articles/1.jpg' %}" alt="">
+            </div>
+        </div>
+    </div>
+</div>

@@ -144,7 +144,7 @@ img {
   display: flex;
 }
 .header__links {
-  flex: 0 0 20%;
+  flex: 0 0 26%;
   display: flex;
   justify-content: space-between;
 }
@@ -331,43 +331,98 @@ img {
   text-align: center;
   margin-bottom: 40px;
 }
-
-.article__item {
+.articles__item {
   flex: 0 0 21%;
   margin-bottom: 40px;
 }
-.article__item:nth-of-type(3n) {
+.articles__item:nth-of-type(3n) {
   flex: 0 0 30%;
 }
 @media (max-width: 768px) {
-  .article__item {
+  .articles__item {
     flex: 0 0 48%;
   }
-  .article__item:nth-of-type(3n) {
+  .articles__item:nth-of-type(3n) {
     flex: 0 0 48%;
   }
 }
 @media (max-width: 640px) {
-  .article__item {
+  .articles__item {
     flex: 0 0 100%;
   }
-  .article__item:nth-of-type(3n) {
+  .articles__item:nth-of-type(3n) {
     flex: 0 0 100%;
   }
 }
-.article__img {
+.articles__img {
   object-fit: cover;
   aspect-ratio: 1/1;
   margin-bottom: 15px;
 }
-.article__title {
+.articles__title {
   font-size: 26px;
   margin-bottom: 10px;
   color: #000;
 }
-.article__date {
+.articles__date {
   font-size: 18px;
   color: rgba(0, 0, 0, 0.411);
+}
+
+.article {
+  height: 70%;
+}
+.article__container {
+  padding: 80px 40px;
+}
+.article__intro {
+  margin-bottom: 80px;
+}
+.article__suptitle {
+  color: #e28000;
+  font-size: 24px;
+  font-weight: 600;
+  text-shadow: #000;
+  margin-bottom: 20px;
+}
+@media (max-width: 425px) {
+  .article__suptitle {
+    font-size: 18px;
+  }
+}
+.article__title {
+  color: #555454;
+  font-size: 62px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+@media (max-width: 425px) {
+  .article__title {
+    font-size: 46px;
+  }
+}
+.article__content {
+  padding: 0 40px;
+  display: flex;
+  justify-content: space-between; /* Распределяет пространство между элементами */
+  align-items: flex-start; /* Выравнивание элементов по верхнему краю */
+  gap: 20px;
+}
+.article__imgs {
+  flex: 1; /* Занимает доступное пространство */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Расстояние между изображениями */
+  max-width: 45%;
+}
+.article__img {
+  width: 48%;
+}
+.article__text {
+  flex: 1; /* Занимает доступное пространство */
+  max-width: 50%; /* Максимальная ширина текста (можно регулировать) */
+  font-size: 24px;
+  line-height: 140%;
 }
 
 /* Стиль для окна чата */

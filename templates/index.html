@@ -11,39 +11,7 @@
     <title>Home</title>
 </head>
 <body>
-    <header class="header">
-        <div class="header__container container">
-            <div class="header__items">
-                <div class="header__item">
-                    <a href="#" class="header__logo ">
-                        <img src="{% static 'img/header/logo.png' %}" alt="">
-                    </a>
-                </div>
-                <div class="header__item header__search">
-                    <input type="text" class="search" placeholder="Search for recipes">
-                    <button class="search__btn">Search</button>
-                </div>
-                <div class="header__item header__links">
-                    <a href="#" class="header__link">
-                        <img src="{% static 'img/header/profile.svg' %}" alt="support">
-                        <div>Profile</div>
-                    </a>
-                    <a href="#" class="header__link">
-                        <img src="{% static 'img/header/support.svg' %}" alt="support">
-                        <div>Support</div>
-                    </a>
-                    <a href="#" class="header__link">
-                        <img src="{% static 'img/header/fav.svg' %}" alt="support">
-                        <div>Favorites</div>
-                    </a>
-                    <a href="#" class="header__link">
-                        <img src="{% static 'img/header/about.svg' %}" alt="support">
-                        <div>About us</div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    {% include 'header.html' %}
     <div class="intro">
         <div class="intro__container container">
             <div class="intro__suptitle">- The theme of August</div>
@@ -59,78 +27,17 @@
                 More than 1210 recipes
             </div>
             <div class="articles__items">
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
+                {% for article in articles %}
+                <a href="{% url 'article' article.id %}" class="articles__item">
+                    <img src="{{ article.image.url }}" alt="" class="articles__img">
+                    <div class="articles__title">
+                        {{article.name}}
                     </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
+                    <div class="articles__date">
+                        {{article.date}}
                     </div>
                 </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
-                <a href="#" class="article__item">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="" class="article__img">
-                    <div class="article__title">
-                        Trout steak with spinach in cream sauce
-                    </div>
-                    <div class="article__date">
-                        August
-                    </div>
-                </a>
+                {% endfor %}
             </div>
         </div>
     </div>

@@ -9,6 +9,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('profile/<str:username>/', views.profile, name='profile'),
+    path('article/<int:article_id>/', views.article, name='article'),
     path('register/', views.register, name='register'),
     path('login/', views.user_login, name='login'),
     path('accounts/', include('allauth.urls')),    
