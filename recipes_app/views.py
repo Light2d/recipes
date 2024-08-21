@@ -4,7 +4,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import MessageForm, UserProfileForm
-from .models import Chat, Article, CustomUser
+from .models import Chat, Article, CustomUser, Product
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
@@ -174,3 +174,13 @@ def update_profile(request):
         except json.JSONDecodeError:
             return JsonResponse({'success': False, 'error': 'Invalid JSON'})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
+
+
+def products(request):
+    products = Product.objects.filter()
+    return render(request, 'products.html', {'products': products})
+
+def product(request, product_id):
+    product = get_object_or_404(Article, pk=product_id)
+    products = Product.objects.filter()
+    return render(request, 'product.html', {'product': product, 'products': products})

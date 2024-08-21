@@ -9,6 +9,8 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('products/', views.products, name='products'),
+    path('product/<int:product_id>/', views.product, name='product'),
     path('profile/<str:username>/', views.profile, name='profile'),
     path('update-profile/', views.update_profile, name='update_profile'),
     path('article/<int:article_id>/', views.article, name='article'),

@@ -10,60 +10,63 @@
 <body style="background: #e2e8f0;">
     {% include 'header.html' %}
 
-
-
-    <div class="profile">
-        <div class="profile__container container">
-            <div class="profile__card">
-                <div class="profile__img">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="">
-                </div>
-                <div class="profile__name">{{ user.username }}</div>
-                <div class="profile__email">{{ user.email }}</div>
-            </div> 
-            <div class="profile__info">
-                <div class="profile__item">
-                    <div class="profile__title">First Name</div>
-                    <div class="profile__data" id="first-name-data">{{ user.first_name }}</div>
-                    <input type="text" id="first-name-input" value="{{ user.first_name }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__item">
-                    <div class="profile__title">Last Name</div>
-                    <div class="profile__data" id="last-name-data">{{ user.last_name }}</div>
-                    <input type="text" id="last-name-input" value="{{ user.last_name }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__item">
-                    <div class="profile__title">Email</div>
-                    <div class="profile__data" id="email-data">{{ user.email }}</div>
-                    <input type="text" id="email-input" value="{{ user.email }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__item">
-                    <div class="profile__title">Phone Number</div>
-                    <div class="profile__data" id="phone-number-data">{{ user.phone_number }}</div>
-                    <input type="text" id="phone-number-input" value="{{ user.phone_number }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__item">
-                    <div class="profile__title">Address</div>
-                    <div class="profile__data" id="address-data">{{ user.adress }}</div>
-                    <input type="text" id="address-input" value="{{ user.adress }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__item">
-                    <div class="profile__title">Country</div>
-                    <div class="profile__data" id="country-data">{{ user.country }}</div>
-                    <input type="text" id="country-input" value="{{ user.country }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__item">
-                    <div class="profile__title">City</div>
-                    <div class="profile__data" id="city-data">{{ user.city }}</div>
-                    <input type="text" id="city-input" value="{{ user.city }}" class="edit-input" style="display: none;">
-                </div>
-                <div class="profile__btns">
-                    <button id="edit-button" class="profile__edit btn btn-primary">Edit</button>
-                    <button id="save-button" class=" profile__save btn btn-success" style="display: none;">Save</button>
+    <main>
+        <div class="profile">
+            <div class="profile__container container">
+                <div class="profile__card">
+                    <div class="profile__img">
+                        <img src="{% static 'img/articles/1.jpg' %}" alt="">
+                    </div>
+                    <div class="profile__name">{{ user.username }}</div>
+                    <div class="profile__email">{{ user.email }}</div>
+                </div> 
+                <div class="profile__info">
+                    <div class="profile__item">
+                        <div class="profile__title">First Name</div>
+                        <div class="profile__data" id="first-name-data">{{ user.first_name }}</div>
+                        <input type="text" id="first-name-input" value="{{ user.first_name }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__item">
+                        <div class="profile__title">Last Name</div>
+                        <div class="profile__data" id="last-name-data">{{ user.last_name }}</div>
+                        <input type="text" id="last-name-input" value="{{ user.last_name }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__item">
+                        <div class="profile__title">Email</div>
+                        <div class="profile__data" id="email-data">{{ user.email }}</div>
+                        <input type="text" id="email-input" value="{{ user.email }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__item">
+                        <div class="profile__title">Phone Number</div>
+                        <div class="profile__data" id="phone-number-data">{{ user.phone_number }}</div>
+                        <input type="text" id="phone-number-input" value="{{ user.phone_number }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__item">
+                        <div class="profile__title">Address</div>
+                        <div class="profile__data" id="address-data">{{ user.adress }}</div>
+                        <input type="text" id="address-input" value="{{ user.adress }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__item">
+                        <div class="profile__title">Country</div>
+                        <div class="profile__data" id="country-data">{{ user.country }}</div>
+                        <input type="text" id="country-input" value="{{ user.country }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__item">
+                        <div class="profile__title">City</div>
+                        <div class="profile__data" id="city-data">{{ user.city }}</div>
+                        <input type="text" id="city-input" value="{{ user.city }}" class="edit-input" style="display: none;">
+                    </div>
+                    <div class="profile__btns">
+                        <button id="edit-button" class="profile__edit btn btn-primary">Edit</button>
+                        <button id="save-button" class=" profile__save btn btn-success" style="display: none;">Save</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    {% include 'footer.html' %}
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('edit-button').addEventListener('click', function() {
