@@ -1,6 +1,9 @@
 from django.contrib import admin
 from .models import CustomUser, Message, Article, Chat
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('username', 'email', 'phone_number', 'adress', 'country', 'city')
+
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('chat', 'sender', 'text', 'timestamp')
     search_fields = ('sender__username', 'text')
@@ -21,5 +24,6 @@ class ArticleAdmin(admin.ModelAdmin):
     
     
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Message, MessageAdmin)
 admin.site.register(Chat, ChatAdmin)

@@ -30,3 +30,8 @@ class MessageForm(forms.ModelForm):
         widgets = {
             'text': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Введите сообщение...'}),
         }
+        
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['first_name', 'last_name', 'email', 'phone_number', 'adress', 'country', 'city']

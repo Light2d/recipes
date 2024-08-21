@@ -2,13 +2,21 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, Permission, Group
 
 
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 class CustomUser(AbstractUser):
     # Устанавливаем свои имена обратных связей
     groups = models.ManyToManyField(Group, verbose_name='Groups', related_name='custom_user_set', blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.')
     user_permissions = models.ManyToManyField(Permission, verbose_name='User permissions', related_name='custom_user_set', blank=True, help_text='Specific permissions for this user.')
+    
+    username = models.CharField(max_length=120, verbose_name='username')
+    email = models.EmailField(unique=True, blank=True, verbose_name='Email Address')
+    phone_number = models.CharField(max_length=15, blank=True, verbose_name='Phone Number')
+    adress = models.CharField(max_length=120, blank=True, verbose_name='adress')
+    country = models.CharField(max_length=50, blank=True, verbose_name='country')
+    city = models.CharField(max_length=50, blank=True, verbose_name='city')
 
-    user_remaining_time = models.IntegerField(default=20)
-    user_highest_bid = models.IntegerField(default=0)
     
 class Chat(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="chats")

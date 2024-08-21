@@ -1,18 +1,136 @@
-<!-- profile.html -->
-<!DOCTYPE html>
-<html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile of {{ user.username }}</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Profile</title>
 </head>
-<body>
-    <h1>Profile of {{ user.username }}</h1>
-    <p><strong>Username:</strong> {{ user.username }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
-    <p><strong>Remaining Time:</strong> {{ user.user_remaining_time }} minutes</p>
-    <p><strong>Highest Bid:</strong> {{ user.user_highest_bid }}</p>
-    <p><strong>Groups:</strong> {{ user.groups.all|join:", " }}</p>
-    <p><strong>Permissions:</strong> {{ user.user_permissions.all|join:", " }}</p>
+<body style="background: #e2e8f0;">
+    {% include 'header.html' %}
+
+
+
+    <div class="profile">
+        <div class="profile__container container">
+            <div class="profile__card">
+                <div class="profile__img">
+                    <img src="{% static 'img/articles/1.jpg' %}" alt="">
+                </div>
+                <div class="profile__name">{{ user.username }}</div>
+                <div class="profile__email">{{ user.email }}</div>
+            </div> 
+            <div class="profile__info">
+                <div class="profile__item">
+                    <div class="profile__title">First Name</div>
+                    <div class="profile__data" id="first-name-data">{{ user.first_name }}</div>
+                    <input type="text" id="first-name-input" value="{{ user.first_name }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__item">
+                    <div class="profile__title">Last Name</div>
+                    <div class="profile__data" id="last-name-data">{{ user.last_name }}</div>
+                    <input type="text" id="last-name-input" value="{{ user.last_name }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__item">
+                    <div class="profile__title">Email</div>
+                    <div class="profile__data" id="email-data">{{ user.email }}</div>
+                    <input type="text" id="email-input" value="{{ user.email }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__item">
+                    <div class="profile__title">Phone Number</div>
+                    <div class="profile__data" id="phone-number-data">{{ user.phone_number }}</div>
+                    <input type="text" id="phone-number-input" value="{{ user.phone_number }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__item">
+                    <div class="profile__title">Address</div>
+                    <div class="profile__data" id="address-data">{{ user.adress }}</div>
+                    <input type="text" id="address-input" value="{{ user.adress }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__item">
+                    <div class="profile__title">Country</div>
+                    <div class="profile__data" id="country-data">{{ user.country }}</div>
+                    <input type="text" id="country-input" value="{{ user.country }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__item">
+                    <div class="profile__title">City</div>
+                    <div class="profile__data" id="city-data">{{ user.city }}</div>
+                    <input type="text" id="city-input" value="{{ user.city }}" class="edit-input" style="display: none;">
+                </div>
+                <div class="profile__btns">
+                    <button id="edit-button" class="profile__edit btn btn-primary">Edit</button>
+                    <button id="save-button" class=" profile__save btn btn-success" style="display: none;">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('edit-button').addEventListener('click', function() {
+                document.querySelectorAll('.edit-input').forEach(function(input) {
+                    input.style.display = 'block';
+                });
+                document.querySelectorAll('.profile__data').forEach(function(data) {
+                    data.style.display = 'none';
+                });
+                document.getElementById('save-button').style.display = 'inline';
+                this.style.display = 'none';
+            });
+        
+            document.getElementById('save-button').addEventListener('click', function() {
+                var data = {
+                    first_name: document.getElementById('first-name-input').value,
+                    last_name: document.getElementById('last-name-input').value,
+                    email: document.getElementById('email-input').value,
+                    phone_number: document.getElementById('phone-number-input').value,
+                    adress: document.getElementById('address-input').value,
+                    country: document.getElementById('country-input').value,
+                    city: document.getElementById('city-input').value,
+                };
+        
+                console.log('Sending data:', data);  // Для отладки
+        
+                fetch("{% url 'update_profile' %}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log('Response:', result);  // Для отладки
+                    if (result.success) {
+                        location.reload(); // Обновите страницу, чтобы отобразить новые данные
+                    } else {
+                        // Преобразование объекта ошибок в строку для отображения
+                        let errorMessage = 'Ошибка при сохранении данных:\n';
+                        if (result.errors) {
+                            for (const [field, errors] of Object.entries(result.errors)) {
+                                errorMessage += `${field}: ${errors.join(', ')}\n`;
+                            }
+                        } else if (result.error) {
+                            errorMessage += result.error;
+                        }
+                        alert(errorMessage);
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка:', error);
+                });
+        
+                document.querySelectorAll('.edit-input').forEach(function(input) {
+                    input.style.display = 'none';
+                });
+                document.querySelectorAll('.profile__data').forEach(function(data) {
+                    data.style.display = 'block';
+                });
+                this.style.display = 'none';
+                document.getElementById('edit-button').style.display = 'inline';
+            });
+        });
+        </script>
+        
 </body>
 </html>

@@ -3,10 +3,11 @@ from django.contrib.auth import login, authenticate
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import MessageForm
+from .forms import MessageForm, UserProfileForm
 from .models import Chat, Article, CustomUser
 from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.views.decorators.http import require_POST
 
 
 def register(request):
@@ -154,3 +155,22 @@ def profile(request, username):
         'user': user,
     }
     return render(request, 'profile.html', context)
+
+import json
+from django.views.decorators.csrf import csrf_exempt
+
+@login_required
+@csrf_exempt  # Для тестирования, убедитесь, что CSRF защита включена на продакшене
+def update_profile(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            form = UserProfileForm(data, instance=request.user)
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'success': True})
+            else:
+                return JsonResponse({'success': False, 'errors': form.errors.get_json_data()})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON'})
+    return JsonResponse({'success': False, 'error': 'Invalid request method'})
