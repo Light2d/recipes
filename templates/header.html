@@ -1,9 +1,10 @@
 {% load static %}
+
 <header class="header">
     <div class="header__container container">
         <div class="header__items">
             <div class="header__item">
-                <a href="{% url 'index' %}" class="header__logo ">
+                <a href="{% url 'index' %}" class="header__logo">
                     <img src="{% static 'img/header/logo.png' %}" alt="">
                 </a>
             </div>
@@ -12,6 +13,47 @@
                 <button class="search__btn">Search</button>
             </div>
             <div class="header__item header__links">
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' username=user.username %}" class="header__link">
+                    <img src="{% static 'img/header/profile.svg' %}" alt="Profile">
+                    <div>Profile</div>
+                </a>
+                <a href="{% url 'logout' %}" class="header__link">
+                    <img src="{% static 'img/header/login.svg' %}" alt="Logout">
+                    <div>Logout</div>
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" class="header__link">
+                    <img src="{% static 'img/header/login.svg' %}" alt="Login">
+                    <div>Login</div>
+                </a>
+                {% endif %}
+                <a href="#" class="header__link">
+                    <img src="{% static 'img/header/support.svg' %}" alt="Support">
+                    <div>Support</div>
+                </a>
+                <a href="#" class="header__link">
+                    <img src="{% static 'img/header/fav.svg' %}" alt="Favorites">
+                    <div>Favorites</div>
+                </a>
+                <a href="#" class="header__link">
+                    <img src="{% static 'img/header/about.svg' %}" alt="About us">
+                    <div>About us</div>
+                </a>
+            </div>
+            <div class="header__item header__burger">
+                <button class="burger__icon">
+                    <span class="burger__line"></span>
+                    <span class="burger__line"></span>
+                    <span class="burger__line"></span>
+                </button>
+            </div>
+        </div>
+        <div class="header__mobile-menu">
+            <div class="header__mobile-links">
+                <a href="{% url 'index' %}" class="header__mobile-logo">
+                    <img src="{% static 'img/header/logo.png' %}" alt="">
+                </a>
                 {% if user.is_authenticated %}
                 <a href="{% url 'profile' username=user.username %}" class="header__link">
                     <img src="{% static 'img/header/profile.svg' %}" alt="support">
@@ -43,3 +85,5 @@
         </div>
     </div>
 </header>
+
+<script src="{% static 'script/burger.js' %}"></script>

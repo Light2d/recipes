@@ -156,10 +156,30 @@ footer {
   flex: 0 0 60%;
   display: flex;
 }
+@media (max-width: 1350px) {
+  .header__search {
+    flex: 0 0 50%;
+  }
+}
+@media (max-width: 1300px) {
+  .header__search {
+    flex: 0 0 40%;
+  }
+}
 .header__links {
   flex: 0 0 26%;
   display: flex;
   justify-content: space-between;
+}
+@media (max-width: 1350px) {
+  .header__links {
+    flex: 0 0 30%;
+  }
+}
+@media (max-width: 1300px) {
+  .header__links {
+    flex: 0 0 35%;
+  }
 }
 .header__link {
   color: rgb(230, 230, 230);
@@ -170,6 +190,79 @@ footer {
 .header__link img {
   width: 40px;
   margin-bottom: 5px;
+}
+.header__burger {
+  display: none; /* Скрываем бургер и показываем только на мобильных */
+}
+.header__mobile-menu {
+  display: none; /* Скрываем мобильное меню */
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: #000;
+  z-index: 999;
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  opacity: 0;
+}
+.header__mobile-menu .header__link {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.322);
+  margin-bottom: 10px;
+}
+.header__mobile-menu .header__link img {
+  margin-right: 15px;
+}
+.header__mobile-menu.active {
+  transform: translateX(0);
+  opacity: 1;
+}
+.header__mobile-logo {
+  display: block;
+  text-align: center;
+}
+.header__mobile-logo img {
+  width: 100px;
+  margin-bottom: 40px;
+}
+.header__mobile-links {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  padding-top: 120px;
+}
+@media (max-width: 992px) {
+  .header__search, .header__links {
+    display: none; /* Скрываем стандартные элементы */
+  }
+  .header__burger {
+    display: flex;
+  }
+  .header__mobile-menu.active {
+    transform: translateX(0); /* Показываем меню при нажатии */
+  }
+  .header .burger__icon {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 30px;
+    width: 30px;
+    z-index: 1000;
+  }
+  .header .burger__line {
+    width: 30px;
+    height: 3px;
+    background-color: rgb(230, 230, 230);
+    transition: transform 0.3s ease-in-out;
+  }
 }
 
 .search {
@@ -523,22 +616,63 @@ footer {
 }
 .profile__container {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
 }
-.profile__card {
+.profile__left {
   flex: 0 0 28%;
+}
+@media (max-width: 1024px) {
+  .profile__left {
+    flex: 0 0 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+@media (max-width: 840px) {
+  .profile__left {
+    flex-direction: column;
+    margin-bottom: 25px;
+  }
+}
+@media (max-width: 400px) {
+  .profile__left {
+    flex-direction: column;
+    margin-bottom: 10px;
+  }
+}
+.profile__card {
   background: #fff;
   padding: 20px;
   text-align: center;
   border-radius: 8px;
+  margin-bottom: 20px;
+}
+@media (max-width: 1024px) {
+  .profile__card {
+    flex: 0 0 50%;
+  }
+}
+@media (max-width: 450px) {
+  .profile__card {
+    flex: 0 0 auto;
+  }
 }
 .profile__img {
   text-align: center;
   margin-bottom: 10px;
 }
 .profile__img img {
+  border-radius: 20px;
   object-fit: cover;
+  max-width: 100%;
   aspect-ratio: 1/1;
+}
+@media (max-width: 1024px) {
+  .profile__img img {
+    border-radius: 50%;
+    width: 335px;
+  }
 }
 .profile__name {
   margin-bottom: 10px;
@@ -553,6 +687,17 @@ footer {
   background: #fff;
   padding: 20px;
   border-radius: 8px;
+  max-height: 450px;
+}
+@media (max-width: 1024px) {
+  .profile__info {
+    flex: 0 0 100%;
+  }
+}
+@media (max-width: 600px) {
+  .profile__info {
+    max-height: 500px;
+  }
 }
 .profile__item {
   display: flex;
@@ -564,6 +709,11 @@ footer {
   font-size: 24px;
   font-weight: 600;
   margin-bottom: 5px;
+}
+@media (max-width: 600px) {
+  .profile__title {
+    flex: 0 0 50%;
+  }
 }
 .profile__data {
   flex: 0 0 45%;
@@ -588,6 +738,43 @@ footer {
   font-size: 18px;
   background: transparent;
   font-weight: 600;
+}
+
+@media (max-width: 1024px) {
+  .profile__dashboard {
+    flex: 0 0 48%;
+  }
+}
+
+.dashboard__books {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+}
+.dashboard__img {
+  margin-right: 50px;
+}
+.dashboard__img img {
+  width: 100px;
+}
+.dashboard__info {
+  text-align: center;
+}
+.dashboard__title {
+  margin-bottom: 5px;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+.dashboard__subtitle {
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+.dashboard__count {
+  font-size: 32px;
 }
 
 .products {
