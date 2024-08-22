@@ -27,7 +27,7 @@ class ProductImageInline(admin.TabularInline):
     extra = 3  # Количество дополнительных полей для загрузки изображений
     
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'description', 'level', 'image']
+    list_display = ['name', 'price', 'description', 'level']
     search_fields = ['name',]
     inlines = [ProductImageInline]
     

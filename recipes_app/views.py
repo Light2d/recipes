@@ -181,6 +181,7 @@ def products(request):
     return render(request, 'products.html', {'products': products})
 
 def product(request, product_id):
-    product = get_object_or_404(Article, pk=product_id)
+    product = get_object_or_404(Product, pk=product_id)
     products = Product.objects.filter()
-    return render(request, 'product.html', {'product': product, 'products': products})
+    otherProducts = Product.objects.exclude(pk=product_id)
+    return render(request, 'product.html', {'product': product, 'products': products, 'otherProducts': otherProducts})

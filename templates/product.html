@@ -24,9 +24,7 @@
                     <div class="">
                         <div class="slider__flex">
                             <div class="slider__col">
-    
                                 <div class="slider__prev"><img src="{% static 'img/arrowU.svg' %}" alt=""></div> <!-- Кнопка для переключения на предыдущий слайд -->
-    
                                 <div class="slider__thumbs">
                                     <div class="swiper-container"> <!-- Слайдер с превью -->
                                         <div class="swiper-wrapper">
@@ -38,9 +36,7 @@
                                         </div>
                                     </div>
                                 </div>
-    
                                 <div class="slider__next"><img src="{% static 'img/arrowD.svg' %}" alt=""></div> <!-- Кнопка для переключения на следующий слайд -->
-    
                             </div>
     
                             <div class="slider__images">
@@ -59,9 +55,9 @@
                     </div>
                 </section>
     
-                {% comment %} <div class="other otherOne">
-                    <div class="other__title">{% trans 'Other auctions' %}</div>
-                    <div class="other__subtitle">{% trans 'Sponsered' %}</div>
+              <div class="other otherOne">
+                    <div class="other__title">{% trans 'Other products' %}</div>
+                    <div class="other__subtitle">{{otherProduct.level}}</div>
                     <div class="other__items">
                         {% for otherProduct in otherProducts %}
                         <a href="{% url 'product' product_id=otherProduct.id %}">
@@ -70,19 +66,20 @@
                                     <img src="{{ otherProduct.images.first.image.url }}" alt="{{otherProduct.name}}" class="">
                                 </div>
                                 <div class="otherItem__title">{{otherProduct.name}}</div>
-                                <div class="otherItem__price">Eur {{otherProduct.price}} €</div>
+                                <div class="otherItem__level">{{otherProduct.level}}</div>
+                                <div class="otherItem__price">{{otherProduct.price}} $</div>
                             </div>
                         </a>
                         {% endfor %}
                     </div>
-                </div> {% endcomment %}
+                </div> 
             </div>
             <div class="productDetail__right">
                 <form method="post" action="">
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <div class="productDetail__title" id="productTitle-{{ product.id }}">{{ product.name }}</div>
-                    <div class="productDetail__price">{{ product.level }} $</div>
+                    <div class="productDetail__price">{{ product.price }} $</div>
                     <div class="productDetail__btns">
                         <a href="" class="productDetail__btn">{% trans 'Buy' %}</a>
                         <button type="submit" class="productDetail__btn">{% trans 'Add to favorites' %}</button>
@@ -93,8 +90,7 @@
             </div>
         </div>
         <div class="other otherTwo container">
-            <div class="other__title">{% trans 'Other auctions' %}</div>
-            <div class="other__subtitle">{% trans 'Sponsered' %}</div>
+            <div class="other__title">{% trans 'Other products' %}</div>
             <div class="other__items">
                 {% for otherProduct in otherProducts %}
                 <a href="{% url 'product' product_id=otherProduct.id %}">
@@ -103,9 +99,8 @@
                             <img src="{{ otherProduct.images.first.image.url }}" alt="{{ otherProduct.name }}">
                         </div>
                         <div class="otherItem__title">{{ otherProduct.name }}</div>
-                        <div class="otherItem__own">{% trans 'New' %}</div>
-                        <div class="otherItem__price">Eur {{ otherProduct.price }} €</div>
-                        <div class="otherItem__delivery">+2€ {% trans 'shipping' %}</div>
+                        <div class="otherItem__level">{{ otherProduct.level }}</div>
+                        <div class="otherItem__price">$ {{ otherProduct.price }}</div>
                     </div>
                 </a>
             {% empty %}
@@ -114,11 +109,9 @@
             </div>
         </div>
     </main>
-    
-    
+
     {% include 'footer.html' %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <script src="{% static 'script/product.js' %}"></script>
  
 </body>

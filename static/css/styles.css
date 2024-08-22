@@ -91,6 +91,10 @@ h6 {
   font-size: inherit;
   font-weight: inherit;
 } /*# sourceMappingURL=null.css.map */
+html {
+  height: 100%;
+}
+
 body {
   overflow-x: hidden;
   box-sizing: border-box;
@@ -360,8 +364,8 @@ footer {
   background: url("../img/intro/bg.jpeg");
   background-repeat: no-repeat;
   background-position: center;
-  height: 70%;
   margin-bottom: 40px;
+  height: 60vh;
 }
 .intro__container {
   padding: 80px 40px;
@@ -393,11 +397,17 @@ footer {
 }
 .intro__btn {
   background: transparent;
-  border: 1px solid rgb(230, 230, 230);
+  border: 2px solid rgb(230, 230, 230);
   border-radius: 10px;
   padding: 5px 35px;
   font-size: 28px;
   color: #ffffff;
+  transition: all 0.5s ease;
+}
+.intro__btn:hover {
+  background: #ffffff;
+  color: #000;
+  transition: all 0.3s ease;
 }
 
 .articles__container {
@@ -596,17 +606,17 @@ footer {
   justify-content: space-between;
   border-radius: 10px;
   margin-bottom: 20px;
+  color: #000;
 }
 .products__img {
   flex: 0 0 48%;
 }
 .products__img img {
   object-fit: cover;
-  aspect-ratio: 1/1;
   margin-bottom: 15px;
 }
 .products__info {
-  flex: 0 0 49%;
+  flex: 0 0 45%;
 }
 .products__name {
   font-size: 32px;
@@ -629,6 +639,7 @@ footer {
 .productDetail {
   display: flex;
   justify-content: space-between;
+  margin-top: 60px;
 }
 
 .productDetail__left {
@@ -664,7 +675,6 @@ footer {
 @media (max-width: 768px) {
   .slider {
     padding: 10px;
-    color: #fff;
   }
 }
 .slider .swiper-container {
@@ -695,25 +705,13 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   user-select: none;
 }
 
-.slider__next img {
-  max-width: 100%;
-  width: 30px;
-}
-
+.slider__next img,
 .slider__prev img {
   max-width: 100%;
   width: 30px;
-}
-
-.slider__prev:focus,
-.slider__next:focus {
-  outline: none;
 }
 
 .slider__thumbs {
@@ -722,7 +720,6 @@ footer {
 
 .slider__thumbs .slider__image {
   transition: 0.25s;
-  -webkit-filter: grayscale(100%);
   filter: grayscale(100%);
   opacity: 0.5;
 }
@@ -732,46 +729,26 @@ footer {
 }
 
 .slider__thumbs .swiper-slide-thumb-active .slider__image {
-  -webkit-filter: grayscale(0%);
   filter: grayscale(0%);
   opacity: 1;
 }
 
 .slider__images {
-  height: 745px;
-}
-
-@media (max-width: 1400px) {
-  .slider__images {
-    height: 600px;
-  }
-}
-@media (max-width: 1400px) {
-  .slider__images {
-    height: 580px;
-  }
-}
-@media (max-width: 1050px) {
-  .slider__images {
-    height: 450px;
-  }
-}
-@media (max-width: 992px) {
-  .slider__images {
-    height: 710px;
-  }
+  height: 400px;
 }
 @media (max-width: 768px) {
   .slider__images {
     height: auto;
   }
 }
+
 .slider-img {
-  height: auto !important;
+  height: 100%;
 }
 
 .slider__images .slider__image img {
   transition: 3s;
+  object-fit: contain; /* Ensure images cover the container */
 }
 
 .slider__images .slider__image:hover img {
@@ -789,7 +766,7 @@ footer {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain; /* Ensure images cover the container */
 }
 
 @media (max-width: 767.98px) {
@@ -849,10 +826,10 @@ footer {
 
 .productDetail__btn {
   border-radius: 30px;
-  color: #3665F3;
+  color: #000;
   font-size: 24px;
   padding: 10px 0;
-  border: 1px solid #3665F3;
+  border: 1px solid #000000;
   background: transparent;
   cursor: pointer;
   text-align: center;
@@ -860,8 +837,8 @@ footer {
 
 .product__btnAdd {
   border-radius: 30px;
-  color: #3665F3;
-  border: 1px solid #3665F3;
+  color: #000000;
+  border: 1px solid #000000;
   font-size: 24px;
   padding: 10px 0;
   background: transparent;
@@ -870,12 +847,12 @@ footer {
 
 .product__btnAdd-active {
   color: #fff;
-  background: #3665F3;
+  background: #000000;
 }
 
 .productDetail__btn:first-child {
   margin-bottom: 20px;
-  background: #3665F3;
+  background: #000000;
   color: #fff;
 }
 
@@ -899,6 +876,7 @@ footer {
 .other__title {
   font-size: 36px;
   font-weight: 600;
+  margin-bottom: 60px;
 }
 
 .other__subtitle {
@@ -910,6 +888,7 @@ footer {
 .other__items {
   display: flex;
   flex-wrap: wrap;
+  justify-content: start;
 }
 
 .otherTwo {
@@ -922,9 +901,6 @@ footer {
   }
   .otherTwo {
     display: block;
-  }
-  .other__items {
-    justify-content: center;
   }
 }
 .other__items a {
@@ -955,8 +931,13 @@ footer {
 
 .otherItem__title {
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.otherItem__level {
   margin-bottom: 10px;
+  font-size: 16px;
 }
 
 .otherItem__price {

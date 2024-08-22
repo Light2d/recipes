@@ -9,7 +9,7 @@
                     {% for product in products %}
                     <a href="{% url 'product' product.id %}" class="products__item">
                         <div class="products__img">
-                            <img src="{{ product.image.url }}" alt="">
+                            <img src="{{ product.images.first.image.url }}" alt="">
                         </div>
                         <div class="products__info">
                             <div class="products__name">{{product.name}}</div>

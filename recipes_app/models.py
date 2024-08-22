@@ -56,12 +56,12 @@ class Product(models.Model):
     price = models.IntegerField()
     description = models.TextField()
     level = models.TextField(max_length=10)
-    image = models.ImageField(upload_to='products/')
     # document = models.FileField(upload_to='documents/', blank=True, null=True)
     # category = models.ForeignKey(Category, on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
+
 
 class ProductAttribute(models.Model):
     product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
