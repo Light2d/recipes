@@ -1,0 +1,36 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Profile</title>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <main>
+        <div class="about">
+            <div class="about__container container">
+                <div class="about__items">
+                    <div class="about__item">
+                        <div class="about__banner">
+                            <div class="about__suptitle">ONLINE LEARNING</div>
+                            <div class="about__welcome">Welcome!</div>
+                        </div>
+                        <div class="about__text">
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, qui ipsum laudantium aspernatur ad maxime quia, est doloribus atque perspiciatis nesciunt quisquam incidunt rerum odio ea quis commodi quaerat eaque? Magnam magni a veniam optio, dignissimos debitis ab veritatis adipisci.
+                        </div>
+                        <a href="#" class="about__btn">Read More</a>
+                    </div>
+                    <div class="about__item">
+                        <img src="{% static 'img/about/1.jfif' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+</body>

@@ -185,3 +185,6 @@ def product(request, product_id):
     products = Product.objects.filter()
     otherProducts = Product.objects.exclude(pk=product_id)
     return render(request, 'product.html', {'product': product, 'products': products, 'otherProducts': otherProducts})
+
+def aboutUs(request):
+    return render(request, 'aboutUs.html')

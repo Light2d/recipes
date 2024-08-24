@@ -3,6 +3,23 @@
 <body>
     {% include 'header.html' %}
     <main>
+        <div class="productsCategories">
+            <div class="productsCategories__category">
+                Закуски
+            </div>
+            <div class="productsCategories__category">
+                Салаты
+            </div>
+            <div class="productsCategories__category">
+                Соусы
+            </div>
+            <div class="productsCategories__category">
+                Десерты
+            </div>
+            <div class="productsCategories__category">
+                Выпечка
+            </div>
+        </div>
         <div class="products">
             <div class="products__container container">
                 <div class="products__items">
@@ -12,9 +29,9 @@
                             <img src="{{ product.images.first.image.url }}" alt="">
                         </div>
                         <div class="products__info">
-                            <div class="products__name">{{product.name}}</div>
-                            <div class="products__lvl">{{product.level}}</div>
                             <div class="products__price">${{product.price}}</div>
+                            <div class="products__lvl">Level: {{product.level}}</div>
+                            <div class="products__name">{{product.name}}</div>
                         </div>
                     </a>
                     {% endfor %}

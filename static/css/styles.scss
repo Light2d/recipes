@@ -27,6 +27,7 @@ $md4: 479.98;
 
 //<импорты>==============================================
 @import "null";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 html {
     height: 100%;
   }
@@ -34,6 +35,7 @@ body {
   overflow-x: hidden;
   box-sizing: border-box;
   height: 100%;
+  font-family: "Roboto", sans-serif;
 
 }
 
@@ -733,6 +735,7 @@ footer {
 
 //===========products
 .products {
+    font-family: "Roboto", sans-serif;
     margin-top: 60px;
     // .products__container
     &__container {
@@ -745,48 +748,158 @@ footer {
     }
     // .products__item
     &__item {
-        flex: 0 0 24%;
-        background: rgba(163, 152, 152, 0.082);
+        flex: 0 0 15%;
         padding: 20px;
-        display: flex;
-        justify-content: space-between;
         border-radius: 10px;
         margin-bottom: 20px;
         color: #000;
     }
     // .products__img
     &__img {
-        flex: 0 0 48%;
+        text-align: left;
+        max-width: fit-content;
         & img{
-            object-fit: cover;
-            // aspect-ratio: 1 / 1;
+            object-fit: contain;
             margin-bottom: 15px;
         }
     }
     // .products__info
     &__info {
-        flex: 0 0 45%;
     }
     // .products__name
     &__name {
-        font-size: 32px;
+        font-size: 18px;
         margin-bottom: 5px;
-        font-weight: 600;
+        line-height: 120%;
     }
     // .products__lvl
     &__lvl {
+        color: rgb(187, 187, 187);
         font-size: 18px;
         margin-bottom: 10px;
     }
     // .products__price
     &__price {
-        font-size: 32px;margin-bottom: 10px;
+        font-size: 24px;
+        font-weight: 600;
+        margin-bottom: 10px;
     }
     // .products__description
     &__description {
         font-size: 16px;
     }
 }
+.productsCategories {
+    background: rgb(231, 231, 231);
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+    // .productsCategories__category
+    &__category {
+        font-size: 18px;
+        &:not(:last-child){
+            margin-right: 20px;
+        }
+    }
+}
+
+
+//===============about us
+.about {
+    margin: 60px 0;
+    // .about__container
+    &__container {
+    }
+    // .about__items
+    &__items {
+        display: flex;
+        @media (max-width: 1024px) {
+            flex-wrap: wrap;
+            flex-direction: column-reverse;
+        }
+    }
+    // .about__item
+    &__item {
+        &:first-child{
+            flex: 0 0 45%;
+            @media (max-width: 1024px) {
+                flex: 0 0 100%;
+            }
+        }
+        &:last-child{
+            flex: 0 0 55%;
+            @media (max-width: 1024px) {
+                flex: 0 0 100%;
+            }
+        }
+        & img{
+            border-radius: 0 20px 20px 20px;
+            @media (max-width: 1024px) {
+                border-radius: 10px 10px 0px 0px;
+            }
+        }
+    }
+    // .about__banner
+    &__banner {
+        margin-bottom: 40px;
+        background: #000;
+        padding: 40px 20px;
+        border-radius: 10px 0px 0px 10px;
+        @media (max-width: 1024px) {
+            border-radius: 0px 0px 10px 10px;
+        }
+    }
+    // .about__suptitle
+    &__suptitle {
+        font-size: 24px;
+        font-weight: 500;
+        color: #fff;
+        margin-bottom: 20px;
+        
+    }
+    // .about__welcome
+    &__welcome {
+        font-size: 62px;
+        font-weight: 600;
+        color: #fff;
+        @media (max-width: 762px) {
+            font-size: 52px;
+        }
+        @media (max-width: 350px) {
+            font-size: 46px;
+        }
+    }
+    // .about__text
+    &__text {
+        font-style: italic;
+        color: rgba(0, 0, 0, 0.514);
+        font-size: 24px;
+        line-height: 140%;
+        width: 70%;
+        margin-bottom: 40px;
+        margin-left: 50px;
+        @media (max-width: 1024px) {
+            width: auto;
+            margin-left: 0px;
+        }
+    }
+    // .about__btn
+    &__btn {
+        background: #000;
+        color: #fff;
+        text-transform: uppercase;
+        padding: 10px 40px;
+        font-size: 20px;
+        font-weight: 500;
+        margin-left: 50px;
+        @media (max-width: 1024px) {
+            margin-left: 0px;
+        }
+    }
+}
+.container {
+}
+
 
 
 /*===================sLIDER==============================*/
