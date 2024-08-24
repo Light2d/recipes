@@ -134,6 +134,42 @@ footer {
   flex: 0 0 auto;
 }
 
+.suggestions-list {
+  position: absolute;
+  top: 90%;
+  left: 0;
+  width: 100%;
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgb(230, 230, 230);
+  z-index: 10;
+  border-radius: 0px 0px 10px 10px;
+  border-top: 1px rgb(202, 202, 202) solid;
+  display: none; /* Скрыть список изначально */
+}
+
+.suggestions-list li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+.suggestions-list li:not(:last-child) {
+  border-bottom: 1px rgb(202, 202, 202) solid;
+}
+.suggestions-list li img {
+  object-fit: contain;
+  aspect-ratio: 1/1;
+  width: 50px;
+}
+
+.suggestions-list li:hover {
+  background-color: #f0f0f0;
+}
+
 .header {
   background: #000;
 }
@@ -155,6 +191,7 @@ footer {
   width: 120px;
 }
 .header__search {
+  position: relative;
   flex: 0 0 60%;
   display: flex;
 }
@@ -779,21 +816,33 @@ footer {
   font-size: 32px;
 }
 
+.category__items {
+  display: flex;
+  margin-bottom: 60px;
+}
+.category__item {
+  color: #000;
+  flex: 0 0 15%;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  margin-right: 30px;
+}
+.category__name {
+  font-size: 24px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.116);
+}
+
 .products {
   font-family: "Roboto", sans-serif;
   margin-top: 60px;
 }
-.products__items {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.products__item {
-  flex: 0 0 15%;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  color: #000;
+.products__container {
+  position: relative;
+  background: #fff;
+  padding-top: 5rem;
+  z-index: 20;
 }
 .products__img {
   text-align: left;
@@ -833,6 +882,30 @@ footer {
 }
 .productsCategories__category:not(:last-child) {
   margin-right: 20px;
+}
+
+.productsBest {
+  background: linear-gradient(180deg, rgb(255, 255, 255) 36%, rgb(219, 219, 219) 100%);
+  padding: 0 60px;
+}
+.productsBest__items {
+  display: flex;
+  justify-content: space-between;
+}
+.productsBest__name {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 40px;
+}
+.productsBest__item {
+  flex: 0 0 13%;
+  transform: translateY(30px);
+  transition: all 0.5s ease;
+  cursor: pointer;
+}
+.productsBest__item:hover {
+  transform: translateY(0px);
+  transition: all 0.5s ease;
 }
 
 .about {

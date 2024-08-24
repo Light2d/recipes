@@ -20,6 +20,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),    
     path('logout/', views.user_login, name='logout'),
     
+    path('search-products/', views.search_products, name='search_products'),
+     
     path('chat/', views.chat_view, name='chat_view'),
     path('admin_chat/', views.admin_chat_list_view, name='admin_chat_list_view'),
     path('admin_chat/<int:chat_id>/', views.admin_chat_view, name='admin_chat_view'),

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Message, Article, Chat, Product, ProductImage
+from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'phone_number', 'adress', 'country', 'city')
@@ -26,13 +26,17 @@ class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 3  # Количество дополнительных полей для загрузки изображений
     
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'description', 'level']
+    list_display = ['name', 'price', 'description', 'level', 'category']
     search_fields = ['name',]
     inlines = [ProductImageInline]
     
     
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Message, MessageAdmin)

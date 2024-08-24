@@ -4,7 +4,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import MessageForm, UserProfileForm
-from .models import Chat, Article, CustomUser, Product
+from .models import Chat, Article, CustomUser, Product, Category
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
@@ -51,6 +51,7 @@ def user_login(request):
 def index(request):
     user = request.user
     articles = Article.objects.filter()
+    products = Product.objects.filter()
     chat, created = Chat.objects.get_or_create(user=request.user)
     
     form = MessageForm()  
@@ -59,9 +60,21 @@ def index(request):
         'form': form,
         'messages': messages,
         'articles': articles,
+        'products': products,
     }
     
     return render(request, "index.html", context)
+
+def search_products(request):
+    query = request.GET.get('q', '')
+    products = Product.objects.filter(name__icontains=query)[:10]  # Ограничить количество предложений
+    product_list = [{
+        'id': product.id,
+        'name': product.name,
+        'price': product.price,
+        'image': product.images.first().image.url if product.images.exists() else None  # Получаем первое изображение
+    } for product in products]
+    return JsonResponse({'products': product_list})
 
 
 @login_required
@@ -146,8 +159,9 @@ def admin_chat_list_view(request):
 
 def article(request, article_id):
     article = get_object_or_404(Article, pk=article_id)
+    products = Product.objects.filter()
     articles = Article.objects.filter()
-    return render(request, 'article.html', {'article': article, 'articles': articles})
+    return render(request, 'article.html', {'article': article, 'articles': articles, 'products': products})
 
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
@@ -178,7 +192,8 @@ def update_profile(request):
 
 def products(request):
     products = Product.objects.filter()
-    return render(request, 'products.html', {'products': products})
+    categories = Category.objects.prefetch_related('products').all()
+    return render(request, 'products.html', {'products': products, 'categories': categories})
 
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
