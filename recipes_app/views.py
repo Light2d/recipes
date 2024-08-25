@@ -47,7 +47,6 @@ def user_login(request):
         form = UserLoginForm()
     return render(request, 'registration/login.html', {'form': form})
 
-
 def index(request):
     user = request.user
     articles = Article.objects.filter()
@@ -189,17 +188,23 @@ def update_profile(request):
             return JsonResponse({'success': False, 'error': 'Invalid JSON'})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
-
+@login_required
 def products(request):
     products = Product.objects.filter()
     categories = Category.objects.prefetch_related('products').all()
     return render(request, 'products.html', {'products': products, 'categories': categories})
 
+@login_required
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
     products = Product.objects.filter()
     otherProducts = Product.objects.exclude(pk=product_id)
     return render(request, 'product.html', {'product': product, 'products': products, 'otherProducts': otherProducts})
 
+@login_required
 def aboutUs(request):
     return render(request, 'aboutUs.html')
+
+@login_required
+def payment(request):
+    return render(request, 'payment.html')

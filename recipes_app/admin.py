@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category
+from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category, Status, Level
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'phone_number', 'adress', 'country', 'city')
@@ -29,6 +29,12 @@ class ProductImageInline(admin.TabularInline):
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name']
     
+class StatusAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    
+class LevelAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    
 class ProductAdmin(admin.ModelAdmin):
     list_display = ['name', 'price', 'description', 'level', 'category']
     search_fields = ['name',]
@@ -37,6 +43,8 @@ class ProductAdmin(admin.ModelAdmin):
     
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Status, StatusAdmin)
+admin.site.register(Level, LevelAdmin)
 admin.site.register(Product, ProductAdmin)
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Message, MessageAdmin)

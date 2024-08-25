@@ -1,0 +1,115 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<body>
+    {% include 'header.html' %}
+    <main>
+        <div class="payment">
+            <div class="payment__container container">
+                <form class="payment__form" action="">
+                    <div class="payment__items">
+                        <div class="payment__item">
+                            <div class="payment__title">Billing info</div>
+                            <div class="payment__info">
+                                <div class="payment__inputs">
+                                    <div>
+                                        <input type="text" placeholder="First name" name="name" class="payment__firstname">
+                                    </div>
+                                    <div>
+                                        <input type="text" placeholder="Last name"  name="lastname" class="payment__lastname">
+                                    </div>
+                                </div>
+                                <div class="payment__inputs">
+                                    <div class="payment__input">
+                                        <input type="text" placeholder="Adress" name="adress" class="payment__adress">
+                                    </div>
+                                </div>
+                                <div class="payment__inputs">
+                                    <div>
+                                        <input type="text" placeholder="City" name="city" class="payment__city">
+                                    </div>
+                                    <div>
+                                        <input type="text" placeholder="Postal code"  name="postal" class="payment__postal">
+                                    </div>
+                                </div>
+                                <div class="payment__inputs">
+                                    <div class="payment__input">
+                                        <input type="text" placeholder="Phone number"  name="phone" class="payment__phone">
+                                    </div>
+                                </div>
+                                <div class="payment__inputs">
+                                    <div class="payment__input">
+                                        <input type="email" placeholder="Email"  name="email" class="payment__email">
+                                    </div>
+                                </div>
+                                <div class="payment__checks">
+                                    <div class="payment__check ">
+                                        <input class="ll" type="checkbox" id="privacy_policy" name="privacy_policy">
+                                        <label for="privacy_policy">I confirm that I have read and accepted the Privacy Policy</label>
+                                    </div>
+                                    <div class="payment__check ">
+                                        <input type="checkbox" id="terms_of_use" name="terms_of_use">
+                                        <label for="terms_of_use">I confirm that I have read and accepted Terms of use and the Refund Policy</label>
+                                    </div>
+                                    <div class="payment__check ">
+                                        <input type="checkbox" id="service_renewal" name="service_renewal">
+                                        <label for="service_renewal">I am aware that the full subscription would be activated by the end of the trial period and that automatic service renewal option is enabled</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment__item">
+                            <div class="payment__title">Payment info</div>
+                            <div class="payment__card">
+                                <div class="payment__img">
+                                    <img src="{% static 'img/payment/cards.png' %}" alt="">
+                                </div>
+                                <div class="payment__label">
+                                    <label for="card_number">Card number</label>
+                                    <input type="text" placeholder="0000 0000 0000 0000" name="card_number" class="card__input">
+                                </div>
+                                <div class="card__inputs">
+                                    <div class="payment__label">
+                                        <label for="card_number">Expiration date:</label>
+                                        <select name="month" class="card__month">
+                                            <option value="">Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">Аebruary</option>
+                                            <option value="03">Marr</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="payment__label">
+                                        <label for="card_year"></label>
+                                        <select class="card_year" name="card_year" required="required">
+                                            <option value="">Year</option>
+                                            <option value="2024">2024</option><option value="2025">2025</option><option value="2026">2026</option><option value="2027">2027</option><option value="2028">2028</option><option value="2029">2029</option><option value="2030">2030</option><option value="2031">2031</option><option value="2032">2032</option><option value="2033">2033</option><option value="2034">2034</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="payment__label">
+                                    <label for="card_cvv">Cryptogram</label>
+                                    <input type="text" placeholder="CVV2" name="card_cvv" class="card__cvv card__input">
+                                </div>
+                                <div class="payment__btn">
+                                    <button type="submit">Pay</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+    <script src="{% static 'script/payment.js' %}"></script>
+
+</body>

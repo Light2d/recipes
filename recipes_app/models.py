@@ -16,6 +16,16 @@ class CustomUser(AbstractUser):
     adress = models.CharField(max_length=120, blank=True, verbose_name='adress')
     country = models.CharField(max_length=50, blank=True, verbose_name='country')
     city = models.CharField(max_length=50, blank=True, verbose_name='city')
+    
+    STATUS_CHOICES = [
+        ('paid_beginner', 'Paid Beginner'),
+        ('paid_basic', 'Paid Basic'),
+        ('paid_pro', 'Paid PRO'),
+        ('not_paid', 'Not paid'),
+        ('not_renewed', 'Not renewed'),
+    ]
+    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='not_paid', verbose_name='Status')
 
     
 class Chat(models.Model):
@@ -57,24 +67,30 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+class Level(models.Model):
+    name = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Status(models.Model):
+    name = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.name
+    
 class Product(models.Model):
     name = models.CharField(max_length=120)
     price = models.IntegerField()
-    description = models.TextField()
-    level = models.TextField(max_length=10)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    description = models.TextField()
+    level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, related_name='products')
+    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
     # document = models.FileField(upload_to='documents/', blank=True, null=True)
     
     def __str__(self):
         return self.name
 
-
-class ProductAttribute(models.Model):
-    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
-    name = models.CharField(max_length=50)
-    price = models.IntegerField()
-    description = models.TextField()
-    level = models.TextField(max_length=20)
     
 class ProductImage(models.Model):
     product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)

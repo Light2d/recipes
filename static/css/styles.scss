@@ -601,6 +601,100 @@ footer {
 }
 
 
+//======PLAN
+.plan {
+    margin-bottom: 40px;
+    // .plan__container
+    &__container {
+    }
+    // .plan__name
+    &__name {
+        text-align: center;
+        font-weight: 600;
+        font-size: 32px;
+        margin-bottom: 30px;
+    }
+    // .plan__cards
+    &__cards {
+        display: flex;
+        justify-content: center;
+    }
+    // .plan__card
+    &__card {
+        padding: 40px 0;
+        border-radius: 10px;
+        background: rgba(89, 110, 110, 0.486);
+        text-align: center;
+        border: 2px solid rgba(89, 110, 110, 0.486);
+        &:not(:last-child){
+            margin-right: 30px;
+        }
+    }
+    // .plan__lvl
+    &__lvl {
+        padding: 0 30px;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 20px;
+    }
+    // .plan__price
+    &__price {
+        padding: 0 30px;
+        font-size: 46px;
+        margin-bottom: 20px;
+        color: #fff;
+        font-weight: 600;
+    }
+    // .plan__month
+    &__month {
+        font-size: 16px;
+        font-weight: 300;
+        margin-bottom: 20px;
+        color: #fff;
+    }
+    // .plan__days
+    &__days {
+        padding: 0 30px;
+        color: #000;
+        padding: 10px;
+        text-align: center;
+        margin-bottom: 20px;
+        font-style: italic;
+        background: #fff;
+    }
+    // .plan__subtitle
+    &__subtitle {
+        padding: 0 30px;
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 10px;
+        color: #fff;
+    }
+    // .plan__btn
+    &__btn{
+        margin-top: 30px;
+        & a{
+            padding: 0 30px;
+            margin-top: 50px;
+            background: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 20px;
+            border-radius: 15px;
+            text-transform: uppercase;
+            transition: all .5s ease;
+            &:hover{
+                background: #fff;
+                color: rgba(89, 110, 110, 0.486);
+                transition: all .5s ease;
+            }
+        }
+    }
+}
+
+
 //==========profile
 .profile {
     margin-top: 60px;
@@ -1295,6 +1389,184 @@ flex: 0 0 20%;
 
 
 
+//============payment
+.payment {
+    margin: 60px 0;
+    // .payment__container
+    &__container {
+        max-width: 1200px;
+    }
+    // .payment__items
+    &__items {
+        display: flex;
+        justify-content: space-between;
+    }
+    // .payment__item
+    &__item {
+        flex: 0 0 48%;
+        & input{
+            border-radius: 5px;
+            padding: 10px;
+            border: 2px solid rgb(190, 190, 190);
+            font-size: 16px;
+        }
+    }
+    // .payment__title
+    &__title {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    // .payment__form
+    &__form {
+    }
+    // .payment__inputs
+    &__inputs {
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        
+        & div{
+            flex: 0 0 49%;
+        }
+        & input{
+            width: 100%;
+            background: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            border: 2px solid rgb(190, 190, 190);
+            font-size: 16px;
+           
+        }
+    }
+    &__input{
+        flex: 0 0 100% !important;
+        & input{
+        }
+
+    }
+    // .payment__firstname
+    &__firstname {
+    }
+    // .payment__lastname
+    &__lastname {
+    }
+    // .payment__adress
+    &__adress {
+        width: 100%;
+    }
+    // .payment__city
+    &__city {
+    }
+    // .payment__postal
+    &__postal {
+    }
+    // .payment__phone
+    &__phone {
+    }
+    // .payment__email
+    &__email {
+    }
+    // .payment__card
+    &__card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: rgb(175, 175, 175);
+        padding: 30px 100px;
+        border-radius: 10px;
+    }
+    // .payment__img
+    &__img {
+        text-align: center;
+        margin-bottom: 20px;
+        & img{
+            max-width: 200px;
+
+        }
+    }
+    // .payment__label
+    &__label {
+        color: #fff;
+        margin-bottom: 15px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        flex: 0 0 48%;
+        & label{
+            margin-bottom: 3px;
+
+        }
+    }
+    // .payment__btn
+    &__btn {
+        text-align: center;
+        & button{
+            background: #000;
+            color: #fff;
+            border-radius: 10px;
+            text-transform: uppercase;
+            padding: 10px 30px;
+            font-size: 18px;
+        }
+    }
+    &__check{
+        font-size: 16px;
+        line-height: 120%;
+        margin-bottom: 10px;
+        font-weight: 300;
+        &.payment__input{
+
+        }
+    }
+    &__checks{
+        margin-top: 40px;
+
+    }
+}
+.error-message {
+    color: #cf6767;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.error {
+    border-color: #cf6767;
+}
+
+.card {
+    // .card_year
+    &_year {
+        background: #fff;
+        border-radius: 5px;
+        padding: 5px 10px;
+        border: 2px solid rgb(190, 190, 190);
+        font-size: 16px;
+        width: 100%;
+
+    }
+    // .card__input
+    &__input {
+        height: 40px;
+    }
+    // .card__inputs
+    &__inputs {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+    }
+    // .card__month
+    &__month {
+        width: 100%;
+        background: #fff;
+        border-radius: 5px;
+        padding: 5px 10px;
+        border: 2px solid rgb(190, 190, 190);
+        font-size: 16px;
+    }
+    &__cvv{
+        width: 50%;
+    }
+}
 
 
 
