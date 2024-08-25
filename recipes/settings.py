@@ -152,7 +152,7 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'lighttt2d@gmail.com'  # Ваш адрес электронной почты
-EMAIL_HOST_PASSWORD = 'cyug msjb scir iyyz'  # Ваш пароль от электронной почты
+EMAIL_HOST_PASSWORD = 'pqpd kcyl rczx bleo'  # Ваш пароль от электронной почты
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

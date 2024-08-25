@@ -55,7 +55,7 @@
                         <div class="plan__subtitle">Coach by phone 2 hours / month</div>
                         <div class="plan__subtitle">5-day period for 1.95 €</div>
                         <div class="plan__btn">
-                            <a href="{% url 'payment' %}">buy now</a>
+                            <a href="{% url 'payment' plan_type='beginner' %}">buy now</a>
                         </div>
                     </div>
                     <div class="plan__card">
@@ -67,11 +67,11 @@
                         <div class="plan__subtitle">Coach by phone 5 hours / month</div>
                         <div class="plan__subtitle">5-day period for 1.95 €</div>
                         <div class="plan__btn">
-                            <a href="{% url 'payment' %}">buy now</a>
+                            <a href="{% url 'payment' plan_type='basic' %}">buy now</a>
                         </div>
                     </div>
                     <div class="plan__card">
-                        <div class="plan__lvl">Beginner</div>
+                        <div class="plan__lvl">Pro</div>
                         <div class="plan__price">$ 85.80</div>
                         <div class="plan__month">Per Month</div>
                         <div class="plan__days">5-day period at 1.95€</div>
@@ -79,7 +79,7 @@
                         <div class="plan__subtitle">Coach by phone 10 hours / month</div>
                         <div class="plan__subtitle">5-day period for 1.95 €</div>
                         <div class="plan__btn">
-                            <a href="{% url 'payment' %}">buy now</a>
+                            <a href="{% url 'payment' plan_type='pro' %}">buy now</a>
                         </div>
                     </div>
                 </div>

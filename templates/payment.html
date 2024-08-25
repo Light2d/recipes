@@ -6,7 +6,9 @@
     <main>
         <div class="payment">
             <div class="payment__container container">
-                <form class="payment__form" action="">
+                <form class="payment__form" action="" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan_type" value="{{ plan_type }}">
                     <div class="payment__items">
                         <div class="payment__item">
                             <div class="payment__title">Billing info</div>

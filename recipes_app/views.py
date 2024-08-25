@@ -8,7 +8,10 @@ from .models import Chat, Article, CustomUser, Product, Category
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
-
+from django.contrib.auth import get_user_model
+import random
+import string
+from django.core.mail import send_mail
 
 def register(request):
     if request.method == 'POST':
@@ -51,13 +54,13 @@ def index(request):
     user = request.user
     articles = Article.objects.filter()
     products = Product.objects.filter()
-    chat, created = Chat.objects.get_or_create(user=request.user)
+    # chat, created = Chat.objects.get_or_create(user=request.user)
     
     form = MessageForm()  
-    messages = chat.messages.all()
+    # messages = chat.messages.all()
     context = {
         'form': form,
-        'messages': messages,
+        # 'messages': messages,
         'articles': articles,
         'products': products,
     }
@@ -205,6 +208,68 @@ def product(request, product_id):
 def aboutUs(request):
     return render(request, 'aboutUs.html')
 
-@login_required
-def payment(request):
-    return render(request, 'payment.html')
+def generate_random_string(length=8):
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
+def payment(request, plan_type):
+    if request.method == 'POST':
+        # Получаем данные из формы
+        email = request.POST.get('email')
+        first_name = request.POST.get('name')
+        last_name = request.POST.get('lastname')
+        phone_number = request.POST.get('phone')
+        address = request.POST.get('adress')
+        city = request.POST.get('city')
+
+        # Генерация случайного логина и пароля
+        random_username = generate_random_string()
+        random_password = generate_random_string(12)  # Длина пароля 12 символов
+
+        # Установка статуса в зависимости от выбранного уровня
+        if plan_type == 'beginner':
+            status = 'paid_beginner'
+        elif plan_type == 'basic':
+            status = 'paid_basic'
+        elif plan_type == 'pro':
+            status = 'paid_pro'
+        else:
+            status = 'not_paid'
+
+        # Создание нового пользователя с указанными данными
+        new_user = CustomUser.objects.create_user(
+            username=random_username,
+            password=random_password,
+            email=email,
+            first_name=first_name,
+            last_name=last_name,
+            phone_number=phone_number,
+            adress=address,
+            city=city,
+            status=status
+        )
+
+        # Формирование сообщения
+        subject = 'Your Account Details'
+        message = (
+            f"Dear {first_name} {last_name},\n\n"
+            f"Your account has been successfully created.\n\n"
+            f"Username: {random_username}\n"
+            f"Password: {random_password}\n\n"
+            f"Please keep this information safe.\n\n"
+            
+        )
+
+        # Отправка письма
+        send_mail(
+            subject,
+            message,
+            'lighttt2d@gmail.com',  # Отправитель (ваш email)
+            [email],  # Получатель (email пользователя)
+            fail_silently=False,
+        )
+
+        return redirect('login')
+
+    return render(request, 'payment.html', {'plan_type': plan_type})
+
+

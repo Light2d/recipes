@@ -21,6 +21,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),    
     path('logout/', views.user_login, name='logout'),
     
+    path('payment/<str:plan_type>/', views.payment, name='payment'),
+
     path('search-products/', views.search_products, name='search_products'),
      
     path('chat/', views.chat_view, name='chat_view'),
