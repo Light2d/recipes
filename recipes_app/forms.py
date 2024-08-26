@@ -45,3 +45,8 @@ class LessonForm(forms.ModelForm):
         widgets = {
             'time': forms.Select(choices=[(f"{str(h).zfill(2)}:00-{str(h+1).zfill(2)}:00", f"{str(h).zfill(2)}:00-{str(h+1).zfill(2)}:00") for h in range(24)]),
         }
+
+class AvatarForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['avatar']

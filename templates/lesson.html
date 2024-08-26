@@ -57,16 +57,17 @@
                     </thead>
                     <tbody>
                         {% for lesson in lessons %}
-                            <tr>
+                            <tr class="{% if lesson.status == 'past' %}past-lesson{% endif %}">
                                 <td>{{ lesson.name }}</td>
                                 <td>{{ lesson.email }}</td>
                                 <td>{{ lesson.phone_or_skype }}</td>
                                 <td>{{ lesson.date }}</td>
                                 <td>{{ lesson.time }}</td>
+                                <td>{{ lesson.get_status_display }}</td>
                             </tr>
                         {% empty %}
                             <tr>
-                                <td colspan="5" class="no-lessons">No lessons found.</td>
+                                <td colspan="6" class="no-lessons">No lessons found.</td>
                             </tr>
                         {% endfor %}
                     </tbody>

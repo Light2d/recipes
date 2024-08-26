@@ -711,10 +711,17 @@ footer {
     // .plan__cards
     &__cards {
         display: flex;
-        justify-content: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        @media (max-width: 900px) {
+            flex-wrap: wrap;
+            max-width: 600px;
+        }
+        
     }
     // .plan__card
     &__card {
+        flex: 0 0 31%;
         padding: 40px 0;
         border-radius: 10px;
         background: rgba(89, 110, 110, 0.486);
@@ -722,6 +729,10 @@ footer {
         border: 2px solid rgba(89, 110, 110, 0.486);
         &:not(:last-child){
             margin-right: 30px;
+        }
+        @media (max-width: 900px) {
+            flex: 0 0 100%;
+            margin-bottom: 20px;
         }
     }
     // .plan__lvl
@@ -739,6 +750,9 @@ footer {
         margin-bottom: 20px;
         color: #fff;
         font-weight: 600;
+        @media (max-width: 900px) {
+           
+        }
     }
     // .plan__month
     &__month {
@@ -902,6 +916,23 @@ footer {
         background: transparent;
         font-weight: 600;
     }
+    &__editAvatar{
+        margin-top: 5px;
+        margin-bottom: 15px;
+        padding: 5px 15px;
+        width: 100%;
+        border: 2px solid rgb(180, 180, 180);
+        border-radius: 5px;
+        font-size: 18px;
+        background: transparent;
+        font-weight: 600;
+        transition: all .3s ease;
+        &:hover{
+            background: rgb(207, 207, 207);
+            color: #fff;
+            transition: all .3s ease;
+        }
+    }
     &__save{
         padding: 5px 15px;
         border: 2px solid #000;
@@ -994,7 +1025,11 @@ footer {
     &__items {
         
     }
-
+    &__title{
+        font-size: 32px;
+        text-align: center;
+        margin-bottom: 40px;
+    }
     // .products__img
     &__img {
         text-align: left;
@@ -1766,6 +1801,10 @@ flex: 0 0 20%;
     }
 }
 
+.past-lesson {
+    background-color: #f8d7da;
+    color: #721c24;
+}
 
 .lessons-table {
     width: 100%;

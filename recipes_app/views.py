@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import MessageForm, UserProfileForm, LessonForm
+from .forms import MessageForm, UserProfileForm, LessonForm, AvatarForm
 from .models import Chat, Article, CustomUser, Product, Category, Lesson
 from django.http import JsonResponse
 from django.template.loader import render_to_string
@@ -12,6 +12,7 @@ from django.contrib.auth import get_user_model
 import random
 import string
 from django.core.mail import send_mail
+from django.db.models import Count
 
 def register(request):
     if request.method == 'POST':
@@ -167,18 +168,38 @@ def article(request, article_id):
 
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
+
+    if request.method == 'POST':
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            form = AvatarForm(request.POST, request.FILES, instance=user)
+            if form.is_valid():
+                form.save()
+                return JsonResponse({'message': 'Avatar updated successfully'})
+            return JsonResponse({'errors': form.errors}, status=400)
+
+    else:
+        form = AvatarForm(instance=user)
+
     books = user.user_products.all()
-    total_products = Product.objects.count()  # Общее количество продуктов
-    added_books = books.count()  # Количество добавленных книг
-    remaining_books = total_products - added_books  # Количество оставш книг
+    total_products = Product.objects.count()
+    added_books = books.count()
+    remaining_books = total_products - added_books
+    upcoming_lessons = Lesson.objects.filter(user=user, status='upcoming').count()
+    past_lessons = Lesson.objects.filter(user=user, status='past').count()
+    lessons = Lesson.objects.filter(user=user)
+
     context = {
         'user': user,
         'books': books,
         'total_products': total_products,
         'added_books': added_books,
-        'remaining_books': remaining_books
+        'remaining_books': remaining_books,
+        'upcoming_lessons': upcoming_lessons,
+        'past_lessons': past_lessons,
+        'form': form,
     }
     return render(request, 'profile.html', context)
+
 
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -203,11 +224,14 @@ def update_profile(request):
 def products(request):
     products = Product.objects.filter()
     categories = Category.objects.prefetch_related('products').all()
-    return render(request, 'products.html', {'products': products, 'categories': categories})
+    bestProducts = Product.objects.annotate(num_images=Count('images')).filter(num_images__gt=0).order_by('?')[:6]
+
+    return render(request, 'products.html', {'products': products, 'categories': categories, 'bestProducts': bestProducts})
 
 @login_required
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
+
     
     if request.method == "POST":
         if 'add_to_my_books' in request.POST:

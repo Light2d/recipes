@@ -3,6 +3,8 @@ from django.contrib.auth.models import AbstractUser, Permission, Group
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+from django.utils import timezone
+from datetime import datetime  
 
 class Category(models.Model):
     name = models.CharField(max_length=120)
@@ -58,7 +60,8 @@ class CustomUser(AbstractUser):
     country = models.CharField(max_length=50, blank=True, verbose_name='country')
     city = models.CharField(max_length=50, blank=True, verbose_name='city')
     user_products = models.ManyToManyField(Product, related_name='products_by', blank=True, verbose_name='user_products')
-
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True, verbose_name='Avatar')
+                               
     STATUS_CHOICES = [
         ('paid_beginner', 'Paid Beginner'),
         ('paid_basic', 'Paid Basic'),
@@ -71,15 +74,32 @@ class CustomUser(AbstractUser):
 
     
 class Lesson(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lessons')
+    STATUS_CHOICES = [
+        ('upcoming', 'Upcoming'),
+        ('past', 'Past'),
+    ]
+
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     name = models.CharField(max_length=120)
     email = models.EmailField()
     phone_or_skype = models.CharField(max_length=50)
     date = models.DateField()
-    time = models.CharField(max_length=20)
+    time = models.CharField(max_length=20)  # Изменено на текстовое поле
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='upcoming')
+
+    def save(self, *args, **kwargs):
+        current_datetime = timezone.now()
+        lesson_datetime = timezone.make_aware(datetime.combine(self.date, datetime.strptime(self.time.split('-')[1], '%H:%M').time()))
+        
+        if lesson_datetime < current_datetime:
+            self.status = 'past'
+        else:
+            self.status = 'upcoming'
+        
+        super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"{self.name} - {self.date} at {self.time}"
+        return f"{self.name} - {self.date} {self.time} ({self.status})"
 
 class Chat(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="chats")

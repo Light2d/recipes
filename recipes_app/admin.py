@@ -7,7 +7,7 @@ class LessonInline(admin.TabularInline):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'email', 'phone_number', 'adress', 'country', 'city')
+    list_display = ('username', 'email', 'phone_number', 'adress', 'country', 'city', 'avatar')
     filter_horizontal = ('groups', 'user_products')
     inlines = [LessonInline]
 
@@ -48,7 +48,9 @@ class ProductAdmin(admin.ModelAdmin):
     inlines = [ProductImageInline]
     
 class LessonAdmin(admin.ModelAdmin):
-    list_display = ('user', 'name', 'date', 'time')
+    list_display = ('user', 'name', 'email', 'phone_or_skype', 'date', 'time', 'status')
+    list_filter = ('status', 'user', 'date')
+    search_fields = ('name', 'email', 'phone_or_skype', 'date', 'time')
     
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Article, ArticleAdmin)

@@ -7,28 +7,15 @@
             <div class="products__best productsBest">
                 <div class="productsBest__name">Best Recipes</div>
                 <div class="productsBest__items">
-                    <div class="productsBest__item">
-                        <img src="{% static 'img/1.webp' %}" alt="">
-                    </div>
-                    <div class="productsBest__item">
-                        <img src="{% static 'img/1.webp' %}" alt="">
-                    </div>
-                    <div class="productsBest__item">
-                        <img src="{% static 'img/1.webp' %}" alt="">
-                    </div>
-                    <div class="productsBest__item">
-                        <img src="{% static 'img/1.webp' %}" alt="">
-                    </div>
-                    <div class="productsBest__item">
-                        <img src="{% static 'img/1.webp' %}" alt="">
-                    </div>
-                    <div class="productsBest__item">
-                        <img src="{% static 'img/1.webp' %}" alt="">
-                    </div>
-                    
+                    {% for bestProduct in bestProducts %}
+                    <a href="{% url 'product' bestProduct.id %}" class="productsBest__item">
+                        <img src="{{ bestProduct.images.first.image.url }}" alt="">
+                    </a>
+                    {% endfor %}
                 </div>
             </div>
             <div class="products__container container">
+                <div class="products__title">Recipes by category</div>
                 <div class="products__items">
                     {% for category in categories %}
                         <div class="products__category category">

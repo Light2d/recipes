@@ -17,8 +17,18 @@
                 <div class="profile__left">
                     <div class="profile__card">
                         <div class="profile__img">
-                            <img src="{% static 'img/articles/1.jpg' %}" alt="">
+                            {% if user.avatar %}
+                                <img id="avatar-preview" src="{{ user.avatar.url }}" alt="{{ user.username }}">
+                            {% else %}
+                                <!-- Если аватарки нет, используйте изображение по умолчанию -->
+                                <img id="avatar-preview" src="{% static 'img/profile/default.jpg' %}" alt="{{ user.username }}">
+                            {% endif %}
                         </div>
+                        <input type="file" id="avatar-input" style="display: none;">
+
+                        <!-- Button to open the file input dialog -->
+                        <button class="profile__editAvatar" id="change-avatar-button">Change</button>
+
                         <div class="profile__name">{{ user.username }}</div>
                         <div class="profile__email">{{ user.email }}</div>
                     </div> 
@@ -39,9 +49,9 @@
                                     <img src="{% static 'img/profile/book.svg' %}" alt="">
                                 </div>
                                 <div class="dashboard__info">
-                                    <div class="dashboard__title">E-books</div>
-                                    <div class="dashboard__subtitle">Available / Remaining</div>
-                                    <div class="dashboard__count">0/100</div>
+                                    <div class="dashboard__title">Lessons</div>
+                                    <div class="dashboard__subtitle">Upcoming / Past</div>
+                                    <div class="dashboard__count">{{ upcoming_lessons }} / {{ past_lessons }}</div>
                                 </div>
                             </div>
                             <div class="dashboard__books">
@@ -103,7 +113,59 @@
     </main>
 
     {% include 'footer.html' %}
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure elements exist before attaching event listeners
+            const fileInput = document.getElementById('avatar-input');
+            const avatarPreview = document.getElementById('avatar-preview');
+            const changeAvatarButton = document.getElementById('change-avatar-button');
+        
+            if (fileInput && avatarPreview && changeAvatarButton) {
+                // Open file input dialog when the button is clicked
+                changeAvatarButton.addEventListener('click', function() {
+                    fileInput.click();
+                });
+        
+                // Handle file input change
+                fileInput.addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            // Update the avatar image preview
+                            avatarPreview.src = e.target.result;
+        
+                            // Prepare form data
+                            const formData = new FormData();
+                            formData.append('avatar', file);
+        
+                            // Send the image to the server
+                            fetch('{% url "profile" username=user.username %}', {
+                                method: 'POST',
+                                body: formData,
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest',
+                                    'X-CSRFToken': '{{ csrf_token }}'
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                // Optionally handle success or error feedback
+                                console.log('Success:', data);
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            } else {
+                console.error('Required elements are missing');
+            }
+        });
+        </script>
+        
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('edit-button').addEventListener('click', function() {
@@ -170,7 +232,7 @@
                 document.getElementById('edit-button').style.display = 'inline';
             });
         });
-        </script>
+    </script>
         
 </body>
 </html>
