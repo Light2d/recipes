@@ -22,9 +22,10 @@ urlpatterns = [
     path('logout/', views.user_login, name='logout'),
     
     path('payment/<str:plan_type>/', views.payment, name='payment'),
-
+    path('my-books/', views.my_products, name='my_books'),
     path('search-products/', views.search_products, name='search_products'),
-     
+    path('lesson/', views.lesson, name='lesson'),
+
     path('chat/', views.chat_view, name='chat_view'),
     path('admin_chat/', views.admin_chat_list_view, name='admin_chat_list_view'),
     path('admin_chat/<int:chat_id>/', views.admin_chat_view, name='admin_chat_view'),

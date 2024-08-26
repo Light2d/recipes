@@ -1,9 +1,50 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Permission, Group
-
-
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+
+class Category(models.Model):
+    name = models.CharField(max_length=120)
+    description = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
+    
+class Level(models.Model):
+    name = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.name
+
+class Status(models.Model):
+    name = models.CharField(max_length=10, unique=True)
+
+    def __str__(self):
+        return self.name
+    
+
+class Product(models.Model):
+    name = models.CharField(max_length=120)
+    price = models.IntegerField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    description = models.TextField()
+    level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, related_name='products')
+    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
+
+    # document = models.FileField(upload_to='documents/', blank=True, null=True)
+    
+    def __str__(self):
+        return self.name
+
+    
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='products/')
+
+    def __str__(self):
+        return self.product.name + ' Image'
+
 
 class CustomUser(AbstractUser):
     # Устанавливаем свои имена обратных связей
@@ -16,7 +57,8 @@ class CustomUser(AbstractUser):
     adress = models.CharField(max_length=120, blank=True, verbose_name='adress')
     country = models.CharField(max_length=50, blank=True, verbose_name='country')
     city = models.CharField(max_length=50, blank=True, verbose_name='city')
-    
+    user_products = models.ManyToManyField(Product, related_name='products_by', blank=True, verbose_name='user_products')
+
     STATUS_CHOICES = [
         ('paid_beginner', 'Paid Beginner'),
         ('paid_basic', 'Paid Basic'),
@@ -28,6 +70,17 @@ class CustomUser(AbstractUser):
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='not_paid', verbose_name='Status')
 
     
+class Lesson(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='lessons')
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    phone_or_skype = models.CharField(max_length=50)
+    date = models.DateField()
+    time = models.CharField(max_length=20)
+
+    def __str__(self):
+        return f"{self.name} - {self.date} at {self.time}"
+
 class Chat(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="chats")
     admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="admin_chats", limit_choices_to={'is_staff': True}, null=True, blank=True)
@@ -59,43 +112,4 @@ class Article(models.Model):
 
     def __str__(self):
         return self.name
-    
-class Category(models.Model):
-    name = models.CharField(max_length=120)
-    description = models.TextField(blank=True, null=True)
-    
-    def __str__(self):
-        return self.name
-    
-class Level(models.Model):
-    name = models.CharField(max_length=10, unique=True)
-
-    def __str__(self):
-        return self.name
-
-class Status(models.Model):
-    name = models.CharField(max_length=10, unique=True)
-
-    def __str__(self):
-        return self.name
-    
-class Product(models.Model):
-    name = models.CharField(max_length=120)
-    price = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
-    description = models.TextField()
-    level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, related_name='products')
-    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
-    # document = models.FileField(upload_to='documents/', blank=True, null=True)
-    
-    def __str__(self):
-        return self.name
-
-    
-class ProductImage(models.Model):
-    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='products/')
-
-    def __str__(self):
-        return self.product.name + ' Image'
     

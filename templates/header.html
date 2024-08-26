@@ -33,9 +33,9 @@
                     <img src="{% static 'img/header/support.svg' %}" alt="Support">
                     <div>Support</div>
                 </a>
-                <a href="#" class="header__link">
+                <a href="{% url 'my_books' %}" class="header__link">
                     <img src="{% static 'img/header/fav.svg' %}" alt="Favorites">
-                    <div>Favorites</div>
+                    <div>My books</div>
                 </a>
                 <a href="{% url 'aboutUs' %}" class="header__link">
                     <img src="{% static 'img/header/about.svg' %}" alt="About us">

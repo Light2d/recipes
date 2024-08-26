@@ -1,0 +1,107 @@
+{% load static %}
+{% load i18n %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Lesson</title>
+</head>
+
+<body>
+    {% include 'header.html' %}
+    <main>
+        <div class="lesson">
+            <div class="lesson__container container">
+                <div class="lesson__items">
+                    <div class="lesson__item">
+                        <img class="lesson__img" src="{% static 'img/lesson/1.jpeg' %}" alt="">
+                    </div>
+                    <div class="lesson__item">
+                        <div class="lesson__suptitle">Personalized follow-up</div>
+                        <div class="lesson__points">
+                            <div class="lesson__point">
+                                <img class="lesson__picture" src="{% static 'img/lesson/phone.svg' %}" alt="">
+                                <div class="lesson__title">Contact our expert</div>
+                            </div>
+                            <div class="lesson__point">
+                                <img class="lesson__picture" src="{% static 'img/lesson/mark.svg' %}" alt="">
+                                <div class="lesson__title">Clearly state your problem</div>
+                            </div>
+                            <div class="lesson__point">
+                                <img class="lesson__picture" src="{% static 'img/lesson/sol.svg' %}" alt="">
+                                <div class="lesson__title">The solutions</div>
+                            </div>
+                            <div class="lesson__point">
+                                <img class="lesson__picture" src="{% static 'img/lesson/like.svg' %}" alt="">
+                                <div class="lesson__title">Contemplate the result</div>
+                            </div>
+                        </div>
+                        <div class="lesson__btn">
+                            <button id="requestSessionBtn">Request session</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="lessons-table">
+                    <div class="lesson__session">Your sessions</div>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone/Skype ID</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for lesson in lessons %}
+                            <tr>
+                                <td>{{ lesson.name }}</td>
+                                <td>{{ lesson.email }}</td>
+                                <td>{{ lesson.phone_or_skype }}</td>
+                                <td>{{ lesson.date }}</td>
+                                <td>{{ lesson.time }}</td>
+                            </tr>
+                        {% empty %}
+                            <tr>
+                                <td colspan="5" class="no-lessons">No lessons found.</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- Модальное окно -->
+                <div id="lessonModal" class="modal" style="display: none;">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>Request a Session</h2>
+                        <form method="post" action="{% url 'lesson' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+    <script>
+        // Открытие модального окна
+        document.getElementById('requestSessionBtn').onclick = function() {
+            document.getElementById('lessonModal').style.display = 'block';
+        };
+        
+        // Закрытие модального окна
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('lessonModal').style.display = 'none';
+        };
+        document.getElementById("time_input").addEventListener("change", function() {
+            let time = this.value;
+            if (time.length === 5) {
+                this.value = time + ":00"; // Добавляет секунды
+            }
+        });
+        </script>
+</body>

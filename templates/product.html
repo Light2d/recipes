@@ -81,8 +81,8 @@
                     <div class="productDetail__title" id="productTitle-{{ product.id }}">{{ product.name }}</div>
                     <div class="productDetail__price">{{ product.price }} $</div>
                     <div class="productDetail__btns">
-                        <a href="" class="productDetail__btn">{% trans 'Buy' %}</a>
-                        <button type="submit" class="productDetail__btn">{% trans 'Add to favorites' %}</button>
+                        <button type="submit" name="add_to_my_books" class="productDetail__btn">{% trans 'Add to my books' %}</button>
+                        <button class="productDetail__btn">{% trans 'Add to my favorites' %}</button>
                     </div>
                     <div class="productDetail__condition">{% trans 'Description:' %} {{ product.description }}</div>
                 </form>

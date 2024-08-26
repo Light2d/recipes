@@ -3,8 +3,8 @@ from django.contrib.auth import login, authenticate
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import MessageForm, UserProfileForm
-from .models import Chat, Article, CustomUser, Product, Category
+from .forms import MessageForm, UserProfileForm, LessonForm
+from .models import Chat, Article, CustomUser, Product, Category, Lesson
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
@@ -167,8 +167,16 @@ def article(request, article_id):
 
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
+    books = user.user_products.all()
+    total_products = Product.objects.count()  # Общее количество продуктов
+    added_books = books.count()  # Количество добавленных книг
+    remaining_books = total_products - added_books  # Количество оставш книг
     context = {
         'user': user,
+        'books': books,
+        'total_products': total_products,
+        'added_books': added_books,
+        'remaining_books': remaining_books
     }
     return render(request, 'profile.html', context)
 
@@ -200,13 +208,43 @@ def products(request):
 @login_required
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
+    
+    if request.method == "POST":
+        if 'add_to_my_books' in request.POST:
+            request.user.user_products.add(product)
+            # Перенаправляем на ту же страницу или другую, если необходимо
+            return redirect('my_books')
+
     products = Product.objects.filter()
     otherProducts = Product.objects.exclude(pk=product_id)
     return render(request, 'product.html', {'product': product, 'products': products, 'otherProducts': otherProducts})
 
 @login_required
+def my_products(request):
+    user = request.user
+    user_products = user.user_products.all()
+    return render(request, 'my_books.html', {'user_products': user_products})
+
+@login_required
 def aboutUs(request):
     return render(request, 'aboutUs.html')
+
+@login_required
+def lesson(request):
+    lessons = Lesson.objects.filter(user=request.user)
+    if request.method == 'POST':
+        form = LessonForm(request.POST)
+        if form.is_valid():
+            lesson = form.save(commit=False)
+            lesson.user = request.user
+            lesson.save()
+            print(f"Lesson created: {lesson}")  # Отладочное сообщение
+            return redirect('lesson')
+        else:
+            print(form.errors)  
+    else:
+        form = LessonForm()
+    return render(request, 'lesson.html', {'form': form, 'lessons': lessons})
 
 def generate_random_string(length=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))

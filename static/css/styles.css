@@ -111,6 +111,7 @@ body._lock {
 }
 
 img {
+  max-width: 100%;
   width: 100%;
   height: auto;
 }
@@ -392,6 +393,101 @@ footer {
     flex: 0 0 33%;
   }
 }
+/* Основные стили для модального окна */
+.modal {
+  display: none; /* По умолчанию окно скрыто */
+  position: fixed; /* Фиксируем окно на экране */
+  z-index: 1000; /* Поверх всех элементов */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Добавляем прокрутку для длинного контента */
+  background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный фон */
+}
+
+/* Содержимое модального окна */
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* 10% от верха экрана, автоцентрирование */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Ширина окна */
+  max-width: 500px; /* Максимальная ширина окна */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 10px; /* Скругленные углы */
+}
+
+/* Кнопка закрытия окна */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Стили для кнопки */
+.lesson__btn button {
+  background-color: #4CAF50; /* Зеленый цвет фона */
+  color: white; /* Белый цвет текста */
+  padding: 15px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.lesson__btn button:hover {
+  background-color: #45a049; /* Темнее при наведении */
+}
+
+/* Стили для кнопки отправки формы в модальном окне */
+.modal-content button[type=submit] {
+  background-color: #008CBA; /* Синий цвет фона */
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button[type=submit]:hover {
+  background-color: #007bb5; /* Темнее при наведении */
+}
+
+/* Стили для инпутов в модальном окне */
+.modal-content input[type=text],
+.modal-content input[type=email],
+.modal-content input[type=tel],
+.modal-content input[type=date],
+.modal-content select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.modal-content input[type=text]:focus,
+.modal-content input[type=email]:focus,
+.modal-content input[type=tel]:focus,
+.modal-content input[type=date]:focus,
+.modal-content select:focus {
+  border-color: #008CBA;
+  outline: none;
+}
+
 .log {
   width: 100%;
   height: 100%;
@@ -988,6 +1084,9 @@ footer {
   transition: all 0.5s ease;
 }
 
+.userProducts {
+  margin: 60px 0;
+}
 .about {
   margin: 60px 0;
 }
@@ -1524,6 +1623,129 @@ footer {
 }
 .card__cvv {
   width: 50%;
+}
+
+.lesson {
+  margin-bottom: 60px;
+}
+@media (max-width: 800px) {
+  .lesson {
+    margin-bottom: 313px;
+  }
+}
+.lesson__items {
+  margin: 60px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .lesson__items {
+    flex-wrap: wrap;
+  }
+}
+.lesson__item:first-child {
+  flex: 0 0 40%;
+}
+@media (max-width: 900px) {
+  .lesson__item:first-child {
+    flex: 0 0 100%;
+  }
+}
+.lesson__item:last-child {
+  flex: 0 0 55%;
+}
+@media (max-width: 900px) {
+  .lesson__item:last-child {
+    flex: 0 0 100%;
+  }
+}
+.lesson__img {
+  border-radius: 20px;
+  object-fit: cover;
+  aspect-ratio: 1/1;
+}
+@media (max-width: 900px) {
+  .lesson__img {
+    aspect-ratio: auto;
+    margin-bottom: 40px;
+  }
+}
+.lesson__btn {
+  text-align: center;
+}
+.lesson__btn button {
+  background: rgb(87, 192, 61);
+  color: #fff;
+  font-weight: 500;
+  border-radius: 10px;
+  padding: 20px 10px;
+  font-size: 24px;
+  width: 100%;
+}
+.lesson__suptitle {
+  text-align: center;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 40px;
+}
+.lesson__points {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.lesson__point {
+  flex: 0 0 22%;
+}
+.lesson__picture {
+  width: 120px;
+  margin-bottom: 10px;
+}
+.lesson__title {
+  font-size: 20px;
+  font-weight: 500;
+}
+.lesson__session {
+  font-size: 24px;
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.lessons-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+/* Стили для заголовков таблицы */
+.lessons-table thead {
+  background-color: #f4f4f4;
+}
+
+.lessons-table th, .lessons-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+/* Стили для строк таблицы */
+.lessons-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.lessons-table tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Стили для сообщения, когда нет занятий */
+.no-lessons {
+  text-align: center;
+  color: #888;
+  font-style: italic;
 }
 
 /* Стиль для окна чата */

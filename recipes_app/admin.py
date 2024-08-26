@@ -1,8 +1,15 @@
 from django.contrib import admin
-from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category, Status, Level
+from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category, Status, Level, Lesson
+
+class LessonInline(admin.TabularInline):
+    model = Lesson
+    extra = 0  # Убираем пустые строки для новых записей
+
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'email', 'phone_number', 'adress', 'country', 'city')
+    filter_horizontal = ('groups', 'user_products')
+    inlines = [LessonInline]
 
 class MessageAdmin(admin.ModelAdmin):
     list_display = ('chat', 'sender', 'text', 'timestamp')
@@ -40,7 +47,10 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ['name',]
     inlines = [ProductImageInline]
     
+class LessonAdmin(admin.ModelAdmin):
+    list_display = ('user', 'name', 'date', 'time')
     
+admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Status, StatusAdmin)

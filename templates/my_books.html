@@ -1,0 +1,39 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+{% block content %}
+<body>
+    {% include 'header.html' %}
+
+    <main>
+        <div class="userProducts">
+            <div class="userProducts__container container">
+                <div class="products__items">
+                    <div class="products__category category">
+                        <div class="category__items">
+                            {% for user_product in user_products %}
+                            <a href="{% url 'product' user_product.id %}" class="category__item">
+                                <div class="products__img">
+                                    {% if user_product.images.first %}
+                                        <img src="{{ user_product.images.first.image.url }}" alt="">
+                                    {% else %}
+                                        <img src="{% static 'path/to/default/image.jpg' %}" alt="">
+                                    {% endif %}
+                                </div>
+                                <div class="products__info">
+                                    <div class="products__price">${{ user_product.price }}</div>
+                                    <div class="products__lvl">Level: {{ user_product.level }}</div>
+                                    <div class="products__name">{{ user_product.name }}</div>
+                                </div>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    {% include 'footer.html' %}
+
+</body>
+{% endblock %}

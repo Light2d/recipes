@@ -1,7 +1,7 @@
 from django import forms
 from .models import CustomUser
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Message
+from .models import Message, Lesson
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -35,3 +35,13 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['first_name', 'last_name', 'email', 'phone_number', 'adress', 'country', 'city']
+        
+class LessonForm(forms.ModelForm):
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))  # Виджет для выбора даты
+    class Meta:
+        model = Lesson
+        fields = ['name', 'email', 'phone_or_skype', 'date', 'time']
+
+        widgets = {
+            'time': forms.Select(choices=[(f"{str(h).zfill(2)}:00-{str(h+1).zfill(2)}:00", f"{str(h).zfill(2)}:00-{str(h+1).zfill(2)}:00") for h in range(24)]),
+        }
