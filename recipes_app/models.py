@@ -34,7 +34,7 @@ class Product(models.Model):
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, related_name='products')
     status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
 
-    # document = models.FileField(upload_to='documents/', blank=True, null=True)
+    document = models.FileField(upload_to='documents/', blank=True, null=True)
     
     def __str__(self):
         return self.name
