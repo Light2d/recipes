@@ -995,6 +995,11 @@ footer {
     &__items{
         display: flex;
         margin-bottom: 60px;
+        justify-content: start;
+        align-items: end;
+        @media (max-width: 768px) {
+            flex-wrap: wrap;
+        }
     }
     &__item{
         color: #000;
@@ -1002,7 +1007,22 @@ footer {
         border-radius: 10px;
         margin-bottom: 20px;
         margin-right: 30px;
-
+        &:hover{
+            color:rgba(100, 21, 190, 0.767);
+            transition: all .3s ease;
+        }
+        @media (max-width: 768px) {
+            flex: 0 0 49%;
+            margin-right: 0;
+            margin-bottom: 40px;
+        }
+        @media (max-width: 620px) {
+            flex: 0 0 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
     }
     &__name{
         font-size: 24px;
@@ -1050,9 +1070,42 @@ footer {
     }
     // .products__lvl
     &__lvl {
-        color: rgb(187, 187, 187);
+        display: inline-block;
+        color: #000;
+        border: 1px  solid rgba(100, 21, 190, 0.767) ;
         font-size: 18px;
+        font-weight: 300;
         margin-bottom: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 120px;
+        padding-left: 5px;
+        margin-right: 20px;
+        & span{
+            display: block;
+            background: rgba(100, 21, 190, 0.767);
+            padding: 5px 10px;
+            color: #fff;
+        }
+    }
+    &__func{
+        display: flex;
+        align-items: flex-start;
+    }
+    &__btn{
+        margin-right: 10px;
+        width: 30px;
+        background: transparent;
+        & svg{
+            height: 30px;
+            width: 30px;
+            transition: all .3s ease;
+        }
+        & svg:hover{
+            fill: rgba(100, 21, 190, 0.767);
+            transition: all .3s ease;
+        }
     }
     // .products__price
     &__price {
@@ -1097,7 +1150,7 @@ footer {
     // .productsBest__item
     &__item {
         flex: 0 0 13%;
-        transform: translateY(30px);
+        transform: translateY(50px);
         transition: all .5s ease;
         cursor: pointer;
         &:hover{
@@ -1106,6 +1159,11 @@ footer {
         }
     }
 }
+
+
+//==============categories
+
+
 
 //============userProducts
 
@@ -1209,7 +1267,10 @@ footer {
     height: 100%;
     object-fit: cover;
   }
-  
+  .userProduct__img{
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+
+  }
   .user-product header, .user-product .product-details {
     background-color: #fff;
     border: 4px solid #eee;
@@ -1272,6 +1333,10 @@ footer {
   .userProduct__description{
     margin-bottom: 10px;
   }
+  .userProduct__img{
+    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
+
+  }
   .user-product h1 {
     color: #53b5aa;
     font-size: 25px;
@@ -1326,6 +1391,32 @@ footer {
         transition: all .3s ease;
     }
 }  
+.introBooks{
+    background: url('../img/my_books/booksbg.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 40px;
+    height: 40vh;
+    text-align: center;
+}
+.introBooks__btn{
+    background: #fff;
+    color: #53b5aa;
+    border: 2px solid #53b5aa;
+    border-radius: 10px;
+    padding: 5px 35px;
+    font-size: 28px;
+    transition: all .3s ease;
+    &:hover{
+        background: #53b5aa;
+        color: #fff;
+        border-color:#53b5aa;
+        transition: all .3s ease;
+    }
+}
+.introBooks__title{
+    margin-bottom: 40px;
+}
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   

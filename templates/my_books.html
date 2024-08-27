@@ -13,13 +13,19 @@
     {% include 'header.html' %}
 
     <main>
+      <div class="introBooks">
+        <div class="intro__container container">
+            <div class="intro__title introBooks__title">A list of your books</div>
+            <a href="{% url 'products' %}" class="introBooks__btn">
+              New books
+            </a>
+        </div>
+    </div>
         <section id="user-products"> 
             {% for user_product in user_products %}
                 <article class="user-product">
-                    <header>
-                      <a class="remove-product">
+                    <header class="userProduct__img">
                         <img src="{{ user_product.images.first.image.url }}" alt="">
-                      </a>
                     </header>
             
                     <div class="product-details">

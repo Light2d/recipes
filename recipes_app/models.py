@@ -32,7 +32,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     description = models.TextField()
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, related_name='products')
-    status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
+    # status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
 
     document = models.FileField(upload_to='documents/', blank=True, null=True)
     

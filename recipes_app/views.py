@@ -166,6 +166,7 @@ def article(request, article_id):
     articles = Article.objects.filter()
     return render(request, 'article.html', {'article': article, 'articles': articles, 'products': products})
 
+@login_required
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
 
@@ -222,11 +223,25 @@ def update_profile(request):
 
 @login_required
 def products(request):
-    products = Product.objects.filter()
+    products = Product.objects.all()
     categories = Category.objects.prefetch_related('products').all()
     bestProducts = Product.objects.annotate(num_images=Count('images')).filter(num_images__gt=0).order_by('?')[:6]
 
+    if request.method == "POST":
+        if 'add_to_my_books' in request.POST:
+            product_id = request.POST.get('product_id')
+            if product_id:
+                try:
+                    product = Product.objects.get(pk=product_id)
+                    request.user.user_products.add(product)
+                except Product.DoesNotExist:
+                    # Логируем или обрабатываем ошибку
+                    print(f"Product with id {product_id} does not exist.")
+            # Перенаправляем на ту же страницу или другую, если необходимо
+            return redirect('my_books')
+        
     return render(request, 'products.html', {'products': products, 'categories': categories, 'bestProducts': bestProducts})
+
 
 @login_required
 def product(request, product_id):
@@ -249,7 +264,6 @@ def my_products(request):
     user_products = user.user_products.all()
     return render(request, 'my_books.html', {'user_products': user_products})
 
-@login_required
 def aboutUs(request):
     return render(request, 'aboutUs.html')
 
@@ -273,6 +287,7 @@ def lesson(request):
 def generate_random_string(length=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
+@login_required
 def payment(request, plan_type):
     if request.method == 'POST':
         # Получаем данные из формы
