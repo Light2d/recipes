@@ -277,6 +277,10 @@ def aboutUs(request):
         form = SubscriptionForm()
     return render(request, 'aboutUs.html', {'form': form})
 
+def cookies(request):
+     return render(request, 'cookies.html')
+
+
 @login_required
 def contacts(request):
     if request.method == 'POST':

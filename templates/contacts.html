@@ -61,18 +61,8 @@
                     <div class="contacts__img"></div>
                 </div>
             </div>
-            <form id="subscriptionForm" method="post">
-                {% csrf_token %}
-                <input type="email" name="email" placeholder="Email" required>
-                <button type="submit" name="subscribe">Subscribe</button>
-            </form>
         
-            <!-- Модальное окно -->
-            <div id="successModal">
-                <div id="modalContent">
-                    <p>Subscription successful!</p>
-                </div>
-            </div>
+
         </div>
        </div>
        <div id="modalContacts" class="modal-contacts">

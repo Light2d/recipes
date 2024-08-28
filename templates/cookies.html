@@ -1,0 +1,47 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Cookies</title>
+</head>
+<body style="background: #eee;">
+    {% include 'header.html' %}
+
+    <main class="main-content">
+        <section id="cookies-policy" class="policy-section">
+            <h2 class="policy-section__title">Cookies Policy</h2>
+            <p class="policy-section__text">Our website uses cookies to enhance your experience. Cookies are small text files that are placed on your device to help us understand how you use our website, remember your preferences, and improve our services.</p>
+            <p class="policy-section__text"><strong>Types of Cookies We Use:</strong></p>
+            <ul class="policy-section__list">
+                <li class="policy-section__list-item"><strong>Essential Cookies:</strong> These cookies are necessary for the website to function properly.</li>
+                <li class="policy-section__list-item"><strong>Performance Cookies:</strong> These cookies help us analyze how visitors use our website.</li>
+                <li class="policy-section__list-item"><strong>Functional Cookies:</strong> These cookies allow us to remember your preferences and provide enhanced features.</li>
+            </ul>
+            <p class="policy-section__text">You can manage your cookie preferences through your browser settings. However, disabling cookies may affect the functionality of our website.</p>
+        </section>
+
+        <section id="privacy-policy" class="policy-section">
+            <h2 class="policy-section__title">Privacy Policy</h2>
+            <p class="policy-section__text">We are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and share your personal information when you use our website.</p>
+            <p class="policy-section__text"><strong>Information We Collect:</strong></p>
+            <ul class="policy-section__list">
+                <li class="policy-section__list-item"><strong>Personal Information:</strong> This includes your name, email address, and other contact details that you provide to us.</li>
+                <li class="policy-section__list-item"><strong>Usage Data:</strong> We collect information about your interactions with our website, such as your IP address and browsing behavior.</li>
+            </ul>
+            <p class="policy-section__text"><strong>How We Use Your Information:</strong></p>
+            <ul class="policy-section__list">
+                <li class="policy-section__list-item">To provide and improve our services.</li>
+                <li class="policy-section__list-item">To communicate with you and respond to your inquiries.</li>
+                <li class="policy-section__list-item">To analyze usage patterns and enhance user experience.</li>
+            </ul>
+            <p class="policy-section__text">We do not share your personal information with third parties except as required by law or with your consent.</p>
+            <p class="policy-section__text">For more information, please contact us at <a href="mailto:your-email@example.com" class="policy-section__email">your-email@example.com</a>.</p>
+        </section>
+    </main>
+
+    {% include 'footer.html' %}
+   
+</body>
