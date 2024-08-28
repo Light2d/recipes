@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category, Status, Level, Lesson
+from .models import CustomUser, Message, Article, Chat, Product, ProductImage, Category, Status, Level, Lesson, ContactMessage, Subscription
 
 class LessonInline(admin.TabularInline):
     model = Lesson
@@ -52,6 +52,18 @@ class LessonAdmin(admin.ModelAdmin):
     list_filter = ('status', 'user', 'date')
     search_fields = ('name', 'email', 'phone_or_skype', 'date', 'time')
     
+class ContactMessageAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'created_at')
+    search_fields = ('name', 'email', 'subject')
+    list_filter = ('created_at',)
+    
+class SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('email', 'subscribed_at', 'is_active')
+    list_filter = ('is_active',)
+    search_fields = ('email',)
+    
+admin.site.register(Subscription, SubscriptionAdmin)
+admin.site.register(ContactMessage, ContactMessageAdmin)
 admin.site.register(Lesson, LessonAdmin)
 admin.site.register(Article, ArticleAdmin)
 admin.site.register(Category, CategoryAdmin)

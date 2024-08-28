@@ -1,0 +1,135 @@
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Contacts</title>
+</head>
+<body style="background: #eee;">
+    {% include 'header.html' %}
+
+    <main>
+       <div class="contacts">
+        <div class="contacts__container container">
+            <div class="contacts__links">
+                <div class="contacts__link">
+                    <img src="{% static 'img/contacts/geo.svg' %}" alt="">
+                    <div class="contacts__text">
+                        Adress: 19B West 21th Street, Sule 721 New York
+                    </div>
+                </div>
+                <div class="contacts__link">
+                    <img src="{% static 'img/contacts/phone.svg' %}" alt="">
+                    <div class="contacts__text">
+                       Phone: +1235 2414 66
+                    </div>
+                </div>
+                <div class="contacts__link">
+                    <img src="{% static 'img/contacts/tg.svg' %}" alt="">
+                    <div class="contacts__text">
+                        Email: recupes@gmail.com
+                    </div>
+                </div>
+                <div class="contacts__link">
+                    <img src="{% static 'img/contacts/web.svg' %}" alt="">
+                    <div class="contacts__text">
+                        Website: recipes.com
+                    </div>
+                </div>
+            </div>
+            <div class="contacts__items">
+                <div class="contacts__item">
+                    <div class="contacts__title">Contact Us</div>
+                    <form action="" method="post" class="contacts__form">
+                        {% csrf_token %}
+                        <div class="contacts__inputs">
+                            <input type="text" name="name" placeholder="Name" required>
+                            <input type="email" name="email" placeholder="Email" required>
+                        </div>
+                        <div class="contacts__input">
+                            <input type="text" name="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="contacts__input">
+                            <textarea class="contacts__message" name="message" placeholder="Message" required></textarea>
+                        </div>
+                        <button type="submit" class="contacts__btn">Send message</button>
+                    </form>
+                </div>
+                <div class="contacts__item">
+                    <div class="contacts__img"></div>
+                </div>
+            </div>
+            <form id="subscriptionForm" method="post">
+                {% csrf_token %}
+                <input type="email" name="email" placeholder="Email" required>
+                <button type="submit" name="subscribe">Subscribe</button>
+            </form>
+        
+            <!-- Модальное окно -->
+            <div id="successModal">
+                <div id="modalContent">
+                    <p>Subscription successful!</p>
+                </div>
+            </div>
+        </div>
+       </div>
+       <div id="modalContacts" class="modal-contacts">
+        <div class="modal-contacts__content">
+            <span class="modal-contacts__close" onclick="closeModalContacts()">&times;</span>
+            <h2 class="modal-contacts__title">Success</h2>
+            <p class="modal-contacts__text">Your message has been sent successfully!</p>
+        </div>
+    </div>
+    </main>
+
+    {% include 'footer.html' %}
+    <script>
+        function openModalContacts() {
+            document.getElementById('modalContacts').style.display = 'block';
+        }
+    
+        function closeModalContacts() {
+            document.getElementById('modalContacts').style.display = 'none';
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var subscriptionForm = document.getElementById('subscriptionForm');
+            var successModal = document.getElementById('successModal');
+    
+            function showSuccessModal() {
+                successModal.style.display = 'flex';
+                setTimeout(function() {
+                    successModal.style.display = 'none';
+                }, 3000);  // Закрываем модальное окно через 3 секунды
+            }
+    
+            subscriptionForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Предотвращаем стандартное действие формы
+                var formData = new FormData(subscriptionForm);
+                fetch(subscriptionForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                    }
+                }).then(response => response.text()) // Получаем текстовый ответ
+                  .then(data => {
+                      if (data.includes('Subscription successful')) {
+                          showSuccessModal(); // Открываем модальное окно
+                          subscriptionForm.reset(); // Сбрасываем форму
+                      } else {
+                          alert('An error occurred: ' + data);
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+            });
+        });
+    </script>
+    
+   
+</body>

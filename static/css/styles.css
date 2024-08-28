@@ -207,7 +207,7 @@ footer {
   }
 }
 .header__links {
-  flex: 0 0 26%;
+  flex: 0 0 28%;
   display: flex;
   justify-content: space-between;
 }
@@ -218,7 +218,7 @@ footer {
 }
 @media (max-width: 1300px) {
   .header__links {
-    flex: 0 0 35%;
+    flex: 0 0 42%;
   }
 }
 .header__link {
@@ -1574,6 +1574,12 @@ a:hover {
     margin-left: 0px;
   }
 }
+.about__input {
+  border-bottom: 1px solid rgb(199, 199, 199);
+  font-size: 18px;
+  padding-bottom: 10px;
+  margin-left: 50px;
+}
 
 /*===================sLIDER==============================*/
 .productDetail {
@@ -2141,6 +2147,191 @@ a:hover {
   text-align: center;
   color: #888;
   font-style: italic;
+}
+
+.contacts {
+  margin: 60px 0;
+}
+.contacts__container {
+  max-width: 1000px;
+}
+@media (max-width: 768px) {
+  .contacts__container {
+    padding: 0px 20px;
+    max-width: auto;
+  }
+}
+.contacts__links {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 60px;
+}
+@media (max-width: 768px) {
+  .contacts__links {
+    flex-wrap: wrap;
+  }
+}
+.contacts__link {
+  flex: 0 0 25%;
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .contacts__link {
+    flex: 0 0 45%;
+    margin-bottom: 20px;
+  }
+}
+.contacts__link img {
+  width: 80px;
+  background: #53b5aa;
+  padding: 20px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+@media (max-width: 768px) {
+  .contacts__link img {
+    width: 60px;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+}
+.contacts__items {
+  display: flex;
+  background: #fff;
+  border-radius: 10px;
+}
+.contacts__img {
+  background: url(../img/contacts/img.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+}
+.contacts__item:first-child {
+  padding: 30px;
+  flex: 0 0 60%;
+}
+@media (max-width: 768px) {
+  .contacts__item:first-child {
+    flex: 0 0 100%;
+  }
+}
+.contacts__item:last-child {
+  flex: 0 0 40%;
+}
+@media (max-width: 768px) {
+  .contacts__item:last-child {
+    display: none;
+  }
+}
+.contacts__title {
+  font-size: 24px;
+  margin-bottom: 30px;
+}
+.contacts__inputs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+@media (max-width: 450px) {
+  .contacts__inputs {
+    flex-direction: column;
+  }
+}
+.contacts__inputs input {
+  flex: 0 0 47%;
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgb(192, 192, 192);
+}
+.contacts__input {
+  border-bottom: 1px solid rgb(192, 192, 192);
+  margin-bottom: 30px;
+}
+.contacts__input textarea {
+  resize: none;
+  font-size: 16px;
+  font-weight: 300;
+}
+.contacts__input input {
+  font-size: 16px;
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+.contacts__message {
+  width: 100%;
+  height: 100px;
+}
+.contacts__btn {
+  background: #53b5aa;
+  border-radius: 8px;
+  padding: 10px 25px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.modal-contacts {
+  display: none; /* Скрыто по умолчанию */
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+  transition: opacity 0.5s ease;
+}
+.modal-contacts__content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 4px;
+}
+.modal-contacts__title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+.modal-contacts__text {
+  font-weight: 18px;
+  font-weight: 300;
+  text-align: center;
+}
+.modal-contacts__close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+.modal-contacts__close:hover, .modal-contacts__close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#successModal {
+  display: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+#modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
 }
 
 /* Стиль для окна чата */

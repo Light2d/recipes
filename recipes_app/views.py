@@ -3,8 +3,8 @@ from django.contrib.auth import login, authenticate
 from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import MessageForm, UserProfileForm, LessonForm, AvatarForm
-from .models import Chat, Article, CustomUser, Product, Category, Lesson
+from .forms import MessageForm, UserProfileForm, LessonForm, AvatarForm, SubscriptionForm
+from .models import Chat, Article, CustomUser, Product, Category, Lesson, Subscription
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
@@ -13,6 +13,9 @@ import random
 import string
 from django.core.mail import send_mail
 from django.db.models import Count
+from django.conf import settings
+from django.core.mail import BadHeaderError
+from .models import ContactMessage
 
 def register(request):
     if request.method == 'POST':
@@ -265,7 +268,50 @@ def my_products(request):
     return render(request, 'my_books.html', {'user_products': user_products})
 
 def aboutUs(request):
-    return render(request, 'aboutUs.html')
+    if request.method == 'POST':
+        form = SubscriptionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('aboutUs')  # Перенаправление на страницу успеха
+    else:
+        form = SubscriptionForm()
+    return render(request, 'aboutUs.html', {'form': form})
+
+@login_required
+def contacts(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        subject = request.POST.get('subject')
+        message = request.POST.get('message')
+
+        if not name or not email or not subject or not message:
+            return JsonResponse({'error': 'All fields are required.'}, status=400)
+
+        ContactMessage.objects.create(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+
+        full_message = f"Name: {name}\nEmail: {email}\n\nMessage:\n{message}"
+
+        try:
+            send_mail(
+                subject,
+                full_message,
+                email,
+                [settings.EMAIL_HOST_USER],
+                fail_silently=False,
+            )
+            return JsonResponse({'success': True})
+        except BadHeaderError:
+            return JsonResponse({'error': 'Invalid header found.'}, status=400)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+
+    return render(request, 'contacts.html')
 
 @login_required
 def lesson(request):
@@ -348,5 +394,4 @@ def payment(request, plan_type):
         return redirect('login')
 
     return render(request, 'payment.html', {'plan_type': plan_type})
-
 

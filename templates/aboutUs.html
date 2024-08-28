@@ -22,7 +22,16 @@
                         <div class="about__text">
                             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, qui ipsum laudantium aspernatur ad maxime quia, est doloribus atque perspiciatis nesciunt quisquam incidunt rerum odio ea quis commodi quaerat eaque? Magnam magni a veniam optio, dignissimos debitis ab veritatis adipisci.
                         </div>
-                        <a href="#" class="about__btn">Read More</a>
+                        <form id="subscriptionForm" method="post">
+                            {% csrf_token %}
+                            <input class="about__input" type="email" name="email" placeholder="Email" required>
+                            <button type="submit" class="about__btn" name="subscribe">Subscribe</button>
+                        </form>
+                        <div id="successModal">
+                            <div id="modalContent">
+                                <p>Subscription successful!</p>
+                            </div>
+                        </div>
                     </div>
                     <div class="about__item">
                         <img src="{% static 'img/about/1.jfif' %}" alt="">
@@ -33,4 +42,40 @@
     </main>
 
     {% include 'footer.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var subscriptionForm = document.getElementById('subscriptionForm');
+            var successModal = document.getElementById('successModal');
+
+            function showSuccessModal() {
+                successModal.style.display = 'flex';
+                setTimeout(function() {
+                    successModal.style.display = 'none';
+                }, 2000);  // Закрываем модальное окно через 3 секунды
+            }
+
+            subscriptionForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Предотвращаем стандартное действие формы
+                var formData = new FormData(subscriptionForm);
+                fetch(subscriptionForm.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': formData.get('csrfmiddlewaretoken')
+                    }
+                }).then(response => response.text()) // Получаем текстовый ответ
+                  .then(data => {
+                      if (data.includes('Subscription successful')) {
+                          showSuccessModal(); // Открываем модальное окно
+                          subscriptionForm.reset(); // Сбрасываем форму
+                      } else {
+                          alert('An error occurred: ' + data);
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+            });
+        });
+    </script>
 </body>

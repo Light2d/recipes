@@ -1,7 +1,7 @@
 from django import forms
 from .models import CustomUser
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Message, Lesson
+from .models import Message, Lesson, Subscription
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -50,3 +50,8 @@ class AvatarForm(forms.ModelForm):
     class Meta:
         model = CustomUser
         fields = ['avatar']
+        
+class SubscriptionForm(forms.ModelForm):
+    class Meta:
+        model = Subscription
+        fields = ['email']

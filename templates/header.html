@@ -29,10 +29,6 @@
                     <div>Login</div>
                 </a>
                 {% endif %}
-                <a href="#" class="header__link">
-                    <img src="{% static 'img/header/support.svg' %}" alt="Support">
-                    <div>Support</div>
-                </a>
                 <a href="{% url 'my_books' %}" class="header__link">
                     <img src="{% static 'img/header/fav.svg' %}" alt="Favorites">
                     <div>My books</div>
@@ -40,6 +36,10 @@
                 <a href="{% url 'aboutUs' %}" class="header__link">
                     <img src="{% static 'img/header/about.svg' %}" alt="About us">
                     <div>About us</div>
+                </a>
+                <a href="{% url 'contacts' %}" class="header__link">
+                    <img src="{% static 'img/header/contacts.svg' %}" alt="Contacts">
+                    <div>Contacts</div>
                 </a>
             </div>
             <div class="header__item header__burger">
