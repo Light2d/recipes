@@ -224,12 +224,47 @@ def update_profile(request):
             return JsonResponse({'success': False, 'error': 'Invalid JSON'})
     return JsonResponse({'success': False, 'error': 'Invalid request method'})
 
+from django.db.models import Q
+
 @login_required
 def products(request):
+    # Начальные запросы
     products = Product.objects.all()
     categories = Category.objects.prefetch_related('products').all()
-    bestProducts = Product.objects.annotate(num_images=Count('images')).filter(num_images__gt=0).order_by('?')[:6]
+    bestProducts = Product.objects.annotate(num_images=Count('images')).filter(num_images__gt=0).order_by('?')[:12]
+    total_products = Product.objects.count()
+    
+    # Получение параметров запроса
+    search_query = request.GET.get('search', '')
+    base_filter = request.GET.get('Base')
+    pro_filter = request.GET.get('Pro')
+    reset_filter = request.GET.get('reset')
 
+    if reset_filter:
+        # Если кнопка сброса нажата, сбрасываем все фильтры
+        products = Product.objects.all()
+    else:
+        if search_query:
+            products = products.filter(
+                Q(name__icontains=search_query) | 
+                Q(category__name__icontains=search_query)
+            )
+        
+        if base_filter is not None:
+            products = products.filter(level__name='base')
+        
+        if pro_filter is not None:
+            products = products.filter(level__name='pro')
+    
+    # Обновляем количество продуктов после фильтрации
+    total_products = products.count()
+
+    # Фильтруем категории, чтобы оставить только те, которые содержат продукты после фильтрации
+    filtered_categories = []
+    for category in categories:
+        if products.filter(category=category).exists():
+            filtered_categories.append(category)
+    
     if request.method == "POST":
         if 'add_to_my_books' in request.POST:
             product_id = request.POST.get('product_id')
@@ -238,13 +273,15 @@ def products(request):
                     product = Product.objects.get(pk=product_id)
                     request.user.user_products.add(product)
                 except Product.DoesNotExist:
-                    # Логируем или обрабатываем ошибку
                     print(f"Product with id {product_id} does not exist.")
-            # Перенаправляем на ту же страницу или другую, если необходимо
             return redirect('my_books')
         
-    return render(request, 'products.html', {'products': products, 'categories': categories, 'bestProducts': bestProducts})
-
+    return render(request, 'products.html', {
+        'products': products, 
+        'categories': filtered_categories, 
+        'bestProducts': bestProducts, 
+        'total_products': total_products
+    })
 
 @login_required
 def product(request, product_id):

@@ -995,11 +995,12 @@ footer {
     &__items{
         display: flex;
         margin-bottom: 60px;
-        justify-content: space-between;
-
+        justify-content: start;
         flex-wrap: wrap;
         align-items: stretch;
-       
+        @media (max-width: 1280px) {
+           justify-content: space-between;
+        }
     }
     &__item{
         display: flex;
@@ -1008,14 +1009,20 @@ footer {
         flex: 0 0 15%;
         border-radius: 10px;
         margin-bottom: 20px;
+        &:not(:last-child){
+            margin-right: 1.6%;
+        }
         &:hover{
             color:rgba(100, 21, 190, 0.767);
             transition: all .3s ease;
         }
+        @media (max-width: 1280px) {
+            flex: 0 0 32%;
+            margin-right: 0 !important;
+            margin-bottom: 40px;
+        }
         @media (max-width: 768px) {
             flex: 0 0 48%;
-            margin-right: 0;
-            margin-bottom: 40px;
         }
         @media (max-width: 620px) {
             flex: 0 0 100%;
@@ -1122,7 +1129,84 @@ footer {
     &__description {
         font-size: 16px;
     }
+     // .products__container
+     &__container {
+    }
+    // .products__filters
+    &__panel {
+        margin-bottom: 60px;
+    }
+    // .products__panel
+    &__filters {
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        & input{
+            margin-right: 5px;
+        }
+        & label{
+            font-size: 18px;
+        }
+    }
+    // .products__count
+    &__count {
+        margin-right: 20px;
+        font-size: 18px;
+    }
+    // .products__base
+    &__base {
+        margin-right: 20px;
+    }
+    // .products__pro
+    &__pro {
+        margin-right: 20px;
+    }
+    &__reset{
+        & button{
+            background: transparent;
+            font-size: 18px;
+        }
+        @media (max-width: 450px) {
+            margin-top: 10px;
+         }
+    }
+    // .products__search
+    &__search {
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 425px) {
+            flex-wrap: wrap;
+        }
+        & input{
+            flex: 0 1 90%;
+            background: rgba(26, 26, 26, .02);
+            border-bottom: 1px solid #000;
+            padding: 5px;
+            font-size: 18px;
+            @media (max-width: 425px) {
+                flex: 0 0 100%;
+                padding: 10px;
+                margin-bottom: 5px;
+            }
+        }
+        & button{
+            flex: 0 0 10%;
+            white-space: nowrap;
+            background: #000;
+            color: #fff;
+            padding: 15px 30px;
+            font-size: 18px;
+            @media (max-width: 425px) {
+                flex: 0 0 100%;
+
+            }
+        }
+    }
 }
+
+
 .productsCategories {
     background: rgb(231, 231, 231);
     display: flex;
@@ -1141,10 +1225,18 @@ footer {
 .productsBest {
     background: linear-gradient(180deg, rgba(255,255,255,1) 36%, rgba(219,219,219,1) 100%);
     padding: 0 60px;
+    overflow: hidden;
     // .productsBest__items
     &__items {
+        overflow-x: auto; // Убедитесь, что скроллбар появляется при необходимости
+        overflow-y: hidden;
         display: flex;
-        justify-content: space-between;
+        justify-content: start;
+        &::-webkit-scrollbar {
+            width: 5px; /* Ширина скроллбара */
+            height: 0px;
+        }
+
     }
     // .productsBest__name
     &__name {
@@ -1154,10 +1246,20 @@ footer {
     }
     // .productsBest__item
     &__item {
-        flex: 0 0 13%;
+        flex: 0 0 15%;
         transform: translateY(50px);
         transition: all .5s ease;
+        margin-right: 2%;
         cursor: pointer;
+        @media (max-width: 768px) {
+            flex: 0 0 23%;
+        }
+        @media (max-width: 600px) {
+            flex: 0 0 49%;
+        }
+        @media (max-width:385px) {
+            flex: 0 0 100%;
+        }
         &:hover{
             transform: translateY(0px);
             transition: all .5s ease;
