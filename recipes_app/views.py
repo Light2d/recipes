@@ -16,6 +16,7 @@ from django.db.models import Count
 from django.conf import settings
 from django.core.mail import BadHeaderError
 from .models import ContactMessage
+from django.contrib import messages
 
 def register(request):
     if request.method == 'POST':
@@ -77,7 +78,7 @@ def search_products(request):
     product_list = [{
         'id': product.id,
         'name': product.name,
-        'price': product.price,
+        'author': product.author,
         'image': product.images.first().image.url if product.images.exists() else None  # Получаем первое изображение
     } for product in products]
     return JsonResponse({'products': product_list})
@@ -286,11 +287,26 @@ def products(request):
 @login_required
 def product(request, product_id):
     product = get_object_or_404(Product, pk=product_id)
-
+    user = request.user
+    
+    if user.status == 'paid_beginner':
+        max_products = 2
+    elif user.status == 'paid_basic':
+        max_products = 5
+    elif user.status == 'paid_pro':
+        max_products = 10
+    else:
+        max_products = 0  # Для других статусов добавление продуктов запрещено
     
     if request.method == "POST":
         if 'add_to_my_books' in request.POST:
-            request.user.user_products.add(product)
+            # Проверяем, сколько продуктов уже добавлено в "My Books"
+            if user.user_products.count() < max_products:
+                user.user_products.add(product)
+                messages.success(request, 'Product added to your books.')
+            else:
+                messages.error(request, f"You can only add {max_products} products to your books.")
+
             # Перенаправляем на ту же страницу или другую, если необходимо
             return redirect('my_books')
 
@@ -374,7 +390,7 @@ def lesson(request):
 def generate_random_string(length=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
-@login_required
+
 def payment(request, plan_type):
     if request.method == 'POST':
         # Получаем данные из формы

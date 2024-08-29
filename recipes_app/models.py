@@ -28,12 +28,16 @@ class Status(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=120)
-    price = models.IntegerField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
     description = models.TextField()
+    author = models.TextField(default="without author")
     level = models.ForeignKey(Level, on_delete=models.SET_NULL, null=True, related_name='products')
-    # status = models.ForeignKey(Status, on_delete=models.SET_NULL, null=True, related_name='products')
-
+    
+    STATUS_CHOICES = [
+        ('available', 'available'),
+        ('unavailable', 'unavailable'),
+    ]
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='unavailable', verbose_name='Status')
     document = models.FileField(upload_to='documents/', blank=True, null=True)
     
     def __str__(self):

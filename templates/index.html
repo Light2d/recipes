@@ -102,7 +102,9 @@
                 <button type="submit" class="send-btn">Send</button>
             </form>
         </div>
-        <button id="openChat" class="open-btn">Support</button>
+        {% if user.is_authenticated %}
+            <button id="openChat" class="open-btn">Support</button>
+        {% endif %}
     </main>
     {% include 'footer.html' %}
 

@@ -76,7 +76,7 @@
                 <div id="lessonModal" class="modal" style="display: none;">
                     <div class="modal-content">
                         <span class="close">&times;</span>
-                        <h2>Request a Session</h2>
+                        <h2 class="modal__title">Request a Session</h2>
                         <form method="post" action="{% url 'lesson' %}">
                             {% csrf_token %}
                             {{ form.as_p }}

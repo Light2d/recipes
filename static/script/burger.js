@@ -36,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
                             // Проверяем, есть ли у продукта изображение
                             const productImage = product.image ? `<img src="${product.image}" alt="${product.name}" style="width: 40px; height: 40px; object-fit: cover; margin-right: 10px;">` : ' ';
-                            const productPrice = `<span style="margin-left: auto;"> ${product.price} $</span>`;
                             
                             // Создаем ссылку на страницу продукта
                             listItem.innerHTML = `<a href="/product/${product.id}/" style="display: flex; align-items: center; text-decoration: none; color: inherit;">

@@ -66,8 +66,8 @@
                                     <img src="{{ otherProduct.images.first.image.url }}" alt="{{otherProduct.name}}" class="">
                                 </div>
                                 <div class="otherItem__title">{{otherProduct.name}}</div>
-                                <div class="otherItem__level">{{otherProduct.level}}</div>
-                                <div class="otherItem__price">{{otherProduct.price}} $</div>
+                                <div class="otherItem__level">Level: {{otherProduct.level}}</div>
+                                <div class="otherItem__author">{{otherProduct.author}}</div>
                             </div>
                         </a>
                         {% endfor %}
@@ -79,14 +79,14 @@
                     {% csrf_token %}
                     <input type="hidden" name="product_id" value="{{ product.id }}">
                     <div class="productDetail__title" id="productTitle-{{ product.id }}">{{ product.name }}</div>
-                    <div class="productDetail__price">{{ product.price }} $</div>
+                    <div class="productDetail__author">Author: {{ product.author }}</div>
                     <div class="productDetail__btns">
                         <button type="submit" name="add_to_my_books" class="productDetail__btn">{% trans 'Add to my books' %}</button>
-                        <button class="productDetail__btn">{% trans 'Add to my favorites' %}</button>
+                        {% comment %} <button class="productDetail__btn">{% trans 'Add to my favorites' %}</button> {% endcomment %}
                     </div>
                     <div class="productDetail__condition">{% trans 'Description:' %} {{ product.description }}</div>
                 </form>
-
+                
             </div>
         </div>
         <div class="other otherTwo container">
@@ -99,8 +99,8 @@
                             <img src="{{ otherProduct.images.first.image.url }}" alt="{{ otherProduct.name }}">
                         </div>
                         <div class="otherItem__title">{{ otherProduct.name }}</div>
-                        <div class="otherItem__level">{{ otherProduct.level }}</div>
-                        <div class="otherItem__price">$ {{ otherProduct.price }}</div>
+                        <div class="otherItem__level">Level: {{ otherProduct.level }}</div>
+                        <div class="otherItem__author">{{ otherProduct.author }}</div>
                     </div>
                 </a>
             {% empty %}
@@ -113,6 +113,6 @@
     {% include 'footer.html' %}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'script/product.js' %}"></script>
- 
+    
 </body>
 </html>

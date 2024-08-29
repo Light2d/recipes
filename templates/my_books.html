@@ -51,12 +51,29 @@
                     </footer>
                   </article>
             {% endfor %}
+            {% if messages %}
+                <div id="messages">
+                    {% for message in messages %}
+                    <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                        {{ message }}
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
           </section>
       
         </div>
     </main>
     {% include 'footer.html' %}
-
+    <script>
+      // Автоматическое скрытие сообщения через 3 секунды
+      setTimeout(function() {
+          var messages = document.getElementById('messages');
+          if (messages) {
+              messages.style.display = 'none';
+          }
+      }, 2000);
+  </script>
 </body>
 {% endblock %}
 

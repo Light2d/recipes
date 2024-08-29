@@ -1,4 +1,14 @@
 {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <title>Article</title>
+</head>
 <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 {% include 'header.html' %}
 
@@ -24,20 +34,11 @@
         </div>
         <div class="article__content">
             <div class="article__text">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum molestiae quod ea porro nisi. Odio doloremque beatae pariatur eum eaque a. Quidem explicabo, tenetur autem soluta voluptate neque deleniti repellendus optio illo a laboriosam excepturi veritatis ad velit fuga? Laudantium vero voluptas sint ut totam dolorum, possimus numquam quo animi voluptatem tempore. Totam pariatur non optio maxime sit esse ab modi repellat vitae sequi deleniti harum, assumenda amet hic blanditiis unde temporibus veniam. Laboriosam quas quos eos itaque! Voluptas obcaecati repellendus accusantium odit rerum perferendis, minus tempora quo omnis atque, similique cum minima tempore neque sapiente nam. Illum sunt, nihil rerum fugiat excepturi fugit ducimus possimus quas? Voluptatibus nam blanditiis incidunt numquam, at, facere tenetur eveniet alias saepe voluptates quos eaque aut quis ut labore itaque porro ea, necessitatibus maiores? Repellat cupiditate quo ratione soluta at esse. At aspernatur assumenda natus, dolores quibusdam laborum consequatur numquam repudiandae culpa perspiciatis maiores enim ratione nulla magni quo error alias quidem? Eos ut eius placeat adipisci libero rem accusamus, ipsa unde? Ad exercitationem, quis voluptas aliquam laudantium sequi necessitatibus delectus laborum distinctio architecto suscipit temporibus soluta modi veritatis nostrum. Minus explicabo et, animi vero, architecto aut sit voluptatibus aspernatur sequi suscipit vitae esse?
+                {{ article.description }}
             </div>
             <div class="article__imgs">
                 <div class="article__img">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="">
-                </div>
-                <div class="article__img">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="">
-                </div>
-                <div class="article__img">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="">
-                </div>
-                <div class="article__img">
-                    <img src="{% static 'img/articles/1.jpg' %}" alt="">
+                    <img src="{{ article.image.url }}" alt="">
                 </div>
             </div>
         </div>

@@ -43,7 +43,7 @@ class LevelAdmin(admin.ModelAdmin):
     list_display = ['name']
     
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ['name', 'price', 'description', 'level', 'category']
+    list_display = ['name', 'description', 'author', 'level', 'category']
     search_fields = ['name',]
     inlines = [ProductImageInline]
     

@@ -581,6 +581,7 @@ footer {
 
 //============articles
 .articles {
+    
     // .articles__container
     &__container {
         max-width: 1800px;
@@ -637,6 +638,7 @@ footer {
 
 //======article
 .article {
+    margin-bottom: 60px;
     height: 70%;
     // .article__container
     &__container {
@@ -648,6 +650,7 @@ footer {
     }
     // .article__suptitle
     &__suptitle {
+        text-align: center;
         color: #e28000;
         font-size: 24px;
         font-weight: 600; 
@@ -659,6 +662,7 @@ footer {
     }
     // .article__title
     &__title {
+        text-align: center;
         color: #555454;
         font-size: 62px;
         font-weight: 600;
@@ -673,6 +677,10 @@ footer {
         justify-content: space-between; /* Распределяет пространство между элементами */
         align-items: flex-start; /* Выравнивание элементов по верхнему краю */
         gap: 20px; 
+        @media (max-width:992px) {
+            flex-direction: column-reverse;
+            flex-wrap: wrap;
+        }
     }
     // .article__imgs
     &__imgs {
@@ -681,16 +689,22 @@ footer {
         flex-wrap: wrap;
         gap: 20px; /* Расстояние между изображениями */
         max-width: 45%;
+        @media (max-width:992px) {
+            flex: 0 0 100%;
+            max-width:fit-content;
+         }
     }
     &__img{
-        width: 48%;
+       
     }
     // .article__text
     &__text{
         flex: 1; /* Занимает доступное пространство */
-        max-width: 50%; /* Максимальная ширина текста (можно регулировать) */
         font-size: 24px;
         line-height: 140%;
+        @media (max-width:992px) {
+            flex: 0 0 100%;
+        }
     }
 }
 
@@ -988,6 +1002,14 @@ footer {
     &__count {
         font-size: 32px;
     }
+    &__btn{
+        font-size: 24px;
+        background: #53b5aa;
+        padding: 10px 30px;
+        border-radius: 10px;
+        color: #fff;
+        font-weight: 600;
+    }
 }
 
 //===========products
@@ -1119,10 +1141,10 @@ footer {
         }
     }
     // .products__price
-    &__price {
+    &__author {
         margin-top: 15px;
-        font-size: 24px;
-        font-weight: 600;
+        font-size: 16px;
+        font-weight: 300;
         margin-bottom: 10px;
     }
     // .products__description
@@ -1268,7 +1290,53 @@ footer {
 }
 
 
-//==============categories
+//messages
+#messages {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    max-width: 500px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+}
+
+.alert-success {
+    color: #3c763d;
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+}
+
+.alert-error {
+    color: #a94442;
+    background-color: #f2dede;
+    border-color: #ebccd1;
+}
+
+.alert-info {
+    color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.alert-warning {
+    color: #8a6d3b;
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+}
 
 
 
@@ -1851,18 +1919,21 @@ font-size: 32px;
 font-weight: 600;
 margin-bottom: 10px;
 }
-.productDetail__price {
+.productDetail__author {
 font-weight: 400;
-font-size: 48px;
+margin-top: 20px;
+font-size: 24px;
 margin-bottom: 20px;
 }
 .productDetail__condition {
 font-size: 24px;
 margin-bottom: 20px;
+font-weight: 300;
+line-height: 130%;
 }
 .productDetail__time {
 font-weight: 600;
-font-size: 32px;
+font-size: 26px;
 margin-bottom: 20px;
 }
 .productDetail__btns {
@@ -1954,7 +2025,6 @@ flex: 0 0 20%;
 .other__item {
     width: 250px;
     margin-bottom: 30px;
-    box-shadow: 0px 0px 8px 0px rgba(0, 0, 0, 0.2);
     padding: 10px;
 
 }
@@ -1965,8 +2035,8 @@ flex: 0 0 20%;
 .otherItem {
 }
 .otherItem__img {
-   padding: 10px;
    border-radius: 20px;
+   margin-bottom: 15px;
 }
 .otherItem__img img{
     max-width: 100%;
@@ -1975,14 +2045,15 @@ flex: 0 0 20%;
 .otherItem__title {
     font-size: 24px;
     font-weight: 600;
+    line-height: 120%;
     margin-bottom: 5px;
 }
 .otherItem__level{
     margin-bottom: 10px;
     font-size: 16px;
 }
-.otherItem__price {
-    font-size: 24px;
+.otherItem__author {
+    font-size: 18px;
     font-weight: 400;
 }
 .otherItem__deliery {
@@ -2481,6 +2552,10 @@ flex: 0 0 20%;
     }
     
     
+}
+.modal__title{
+    font-size: 18px;
+    text-align: center;
 }
 #successModal {
     display: none;

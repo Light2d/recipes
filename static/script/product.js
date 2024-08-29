@@ -54,3 +54,5 @@ const sliderImages = new Swiper('.slider__images .swiper-container', { // ище
         });
     });
 });
+
+
