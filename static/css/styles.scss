@@ -1708,6 +1708,12 @@ footer {
             font-size: 46px;
         }
     }
+    &__subtitle{
+        font-weight: 600;
+        margin-bottom: 30px;
+        font-size: 24px;
+        margin-left: 50px;
+    }
     // .about__text
     &__text {
         font-style: italic;
@@ -2595,9 +2601,9 @@ $border-color: #dee2e6;
     margin-bottom: 2rem;
 
     &__title {
-        color: $primary-color;
+        color: #000;
         font-size: 2rem;
-        border-bottom: 2px solid $primary-color;
+        border-bottom: 2px solid #000;
         padding-bottom: 0.5rem;
         margin-bottom: 1rem;
     }
@@ -2713,6 +2719,10 @@ $border-color: #dee2e6;
     flex: 1; /* Занимает всё доступное пространство */
     padding: 10px;
     overflow-y: auto;
+    & p{
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
 }
 
 /* Форма для отправки сообщений */
@@ -2733,7 +2743,7 @@ $border-color: #dee2e6;
 /* чат лист */
 .chat-list {
     list-style-type: none; /* Убираем маркеры списка */
-    padding: 0;
+    padding: 0 20px;
     margin: 0;
     display: flex;
     justify-content: space-between;
@@ -2786,7 +2796,7 @@ $border-color: #dee2e6;
     margin-bottom: 20px;
 }
 .message-item {
-  
+  margin-bottom: 10px;
 }
 
 #message-form input[type="text"],

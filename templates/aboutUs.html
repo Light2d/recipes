@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" href="{% static 'img/header/logo.png' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Profile</title>
 </head>
@@ -20,8 +21,16 @@
                             <div class="about__welcome">Welcome!</div>
                         </div>
                         <div class="about__text">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam, qui ipsum laudantium aspernatur ad maxime quia, est doloribus atque perspiciatis nesciunt quisquam incidunt rerum odio ea quis commodi quaerat eaque? Magnam magni a veniam optio, dignissimos debitis ab veritatis adipisci.
+                            Welcome to Recipes, your go-to destination for delicious and easy-to-follow recipes. Whether you're a seasoned chef or just starting out in the kitchen, we believe that cooking should be an enjoyable and rewarding experience for everyone.
                         </div>
+                        <div class="about__text">
+                            Our mission is to inspire you to create mouth-watering dishes that bring people together. We carefully curate a wide variety of recipes, from comforting classics to innovative new flavors, so there's something for every taste and occasion. Our step-by-step instructions make it easy to follow along, ensuring that your culinary creations turn out perfectly every time.
+
+                        </div>
+                        <div class="about__text">
+                            At Recipes, we're more than just a recipe site. We're a community of food lovers who share a passion for cooking and eating well. We invite you to explore our recipes, try something new, and connect with others who share your love for great food.
+                        </div>
+                        <div class="about__subtitle">Subscribe and get new recipes first</div>    
                         <form id="subscriptionForm" method="post">
                             {% csrf_token %}
                             <input class="about__input" type="email" name="email" placeholder="Email" required>

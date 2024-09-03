@@ -1724,6 +1724,12 @@ a:hover {
     font-size: 46px;
   }
 }
+.about__subtitle {
+  font-weight: 600;
+  margin-bottom: 30px;
+  font-size: 24px;
+  margin-left: 50px;
+}
 .about__text {
   font-style: italic;
   color: rgba(0, 0, 0, 0.514);
@@ -2532,9 +2538,9 @@ a:hover {
   margin-bottom: 2rem;
 }
 .policy-section__title {
-  color: #007BFF;
+  color: #000;
   font-size: 2rem;
-  border-bottom: 2px solid #007BFF;
+  border-bottom: 2px solid #000;
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -2617,6 +2623,10 @@ a:hover {
   padding: 10px;
   overflow-y: auto;
 }
+.chat-body p {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
 
 /* Форма для отправки сообщений */
 #message-form {
@@ -2635,7 +2645,7 @@ a:hover {
 /* чат лист */
 .chat-list {
   list-style-type: none; /* Убираем маркеры списка */
-  padding: 0;
+  padding: 0 20px;
   margin: 0;
   display: flex;
   justify-content: space-between;
@@ -2687,6 +2697,10 @@ a:hover {
 
 #chat-window {
   margin-bottom: 20px;
+}
+
+.message-item {
+  margin-bottom: 10px;
 }
 
 #message-form input[type=text],
