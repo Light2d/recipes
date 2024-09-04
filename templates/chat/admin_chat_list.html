@@ -12,10 +12,17 @@
     <h1 class="list__title">All Chats</h1>
     <ul class="chat-list">
         {% for chat in chats %}
-            <li class="chat-item">
-                <a href="{% url 'admin_chat_view' chat.id %}">Chat with {{ chat.user.username }}</a>
-            </li>
-        {% endfor %}
+        <li class="chat-item">
+            <a href="{% url 'admin_chat_view' chat.id %}">
+                {% if chat.user %}
+                    Chat with {{ chat.user.username }}
+                {% else %}
+                    Chat with: {{ chat.guest_name }}
+                {% endif %}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
     </ul>
 </body>
-</html>
+</html>                      

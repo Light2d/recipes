@@ -7,7 +7,16 @@
 <h2>Чат с администратором</h2>
 <div id="chat-window">
     {% for message in messages %}
-        <p><strong>{{ message.sender.username }}:</strong> {{ message.text }} <small>{{ message.timestamp }}</small></p>
+    <p class="chatMessage">
+        <strong>
+            {% if user.aut %}
+                {{ message.sender.username }}
+            {% else %}
+                {{ message.sender_name }}
+            {% endif %}
+        </strong>: {{ message.text }} 
+        <small>{{ message.timestamp }}</small>
+    </p>  
     {% endfor %}
 </div>
 <form method="post" id="message-form">

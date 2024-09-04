@@ -4,7 +4,7 @@ from .forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import MessageForm, UserProfileForm, LessonForm, AvatarForm, SubscriptionForm
-from .models import Chat, Article, CustomUser, Product, Category, Lesson, Subscription
+from .models import Chat, Article, CustomUser, Product, Category, Lesson, Subscription, Message
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.views.decorators.http import require_POST
@@ -17,6 +17,7 @@ from django.conf import settings
 from django.core.mail import BadHeaderError
 from .models import ContactMessage
 from django.contrib import messages
+from django.utils.crypto import get_random_string
 
 def register(request):
     if request.method == 'POST':
@@ -59,18 +60,30 @@ def index(request):
     user = request.user
     articles = Article.objects.filter()
     products = Product.objects.filter()
-    # chat, created = Chat.objects.get_or_create(user=request.user)
-    
-    form = MessageForm()  
-    # messages = chat.messages.all()
+    messages = Message.objects.all()
+    form = MessageForm()
+
+    # Получение списка всех пользователей
+    users = CustomUser.objects.all()
+
+    # Получение списка гостей
+    guest_names = []
+    if not request.user.is_authenticated:
+        guest_name = request.session.get('guest_name')
+        if guest_name:
+            guest_names.append(guest_name)
+
     context = {
         'form': form,
-        # 'messages': messages,
         'articles': articles,
         'products': products,
+        'messages': messages,
+        'users': users,
+        'guest_names': guest_names,
     }
-    
+
     return render(request, "index.html", context)
+
 
 def search_products(request):
     query = request.GET.get('q', '')
@@ -84,21 +97,32 @@ def search_products(request):
     return JsonResponse({'products': product_list})
 
 
-@login_required
 def chat_view(request):
-    chat, created = Chat.objects.get_or_create(user=request.user)
+    guest_name = None
+    if not request.user.is_authenticated:
+        guest_name = request.session.get('guest_name')
+        if not guest_name:
+            guest_name = f"Guest-{get_random_string(8)}"
+            request.session['guest_name'] = guest_name
+
+    chat, created = Chat.objects.get_or_create(
+        user=request.user if request.user.is_authenticated else None,
+        guest_name = guest_name
+    )
 
     if request.method == "POST":
         form = MessageForm(request.POST)
         if form.is_valid():
             message = form.save(commit=False)
             message.chat = chat
-            message.sender = request.user
+            message.sender = request.user if request.user.is_authenticated else None
+            message.sender_name = guest_name if not request.user.is_authenticated else None
             message.save()
+
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-                html = render_to_string('chat_messages.html', {
+                html = render_to_string('chat/chat_messages.html', {
                     'chat': chat,
-                    'messages': chat.messages.all(),
+                    'messages': chat.messages.all().order_by('timestamp'),  # Сортировка сообщений по времени
                     'form': form
                 }, request=request)
                 return JsonResponse({'html': html})
@@ -109,15 +133,19 @@ def chat_view(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
         html = render_to_string('chat/chat_messages.html', {
             'chat': chat,
-            'messages': chat.messages.all(),
+            'messages': chat.messages.all().order_by('timestamp'),  # Сортировка сообщений по времени
             'form': form
         }, request=request)
         return JsonResponse({'html': html})
 
-    return render(request, 'chat/chat.html', {'chat': chat, 'messages': chat.messages.all(), 'form': form})
+    return render(request, 'chat/chat.html', {
+        'chat': chat,
+        'messages': chat.messages.all().order_by('timestamp'),  # Сортировка сообщений по времени
+        'form': form
+    })
 
 
-@login_required
+
 def admin_chat_view(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
     messages = chat.messages.all()
@@ -157,11 +185,10 @@ def admin_chat_view(request, chat_id):
     })
 
 
-
-@login_required
 def admin_chat_list_view(request):
     chats = Chat.objects.all()
     return render(request, 'chat/admin_chat_list.html', {'chats': chats})
+
 
 
 def article(request, article_id):

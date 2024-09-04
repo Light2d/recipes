@@ -93,9 +93,7 @@
                 <button id="closeChat" class="close-btn">&times;</button>
             </div>
             <div id="chatBody" class="chat-body">
-                {% for message in messages %}
-                    <p class="chatMessage"><strong>{{ message.sender.username }}:</strong> {{ message.text }} <small>{{ message.timestamp }}</small></p>
-                {% endfor %}
+                
             </div>
             <form method="post" id="message-form">
                 {% csrf_token %}
@@ -103,9 +101,7 @@
                 <button type="submit" class="send-btn">Send</button>
             </form>
         </div>
-        {% if user.is_authenticated %}
             <button id="openChat" class="open-btn">Support</button>
-        {% endif %}
     </main>
     {% include 'footer.html' %}
 
@@ -114,7 +110,7 @@
     <script>
         $(document).ready(function() {
             // Обновление чата каждые 5 секунд
-            setInterval(loadChat, 5000);
+            setInterval(loadChat, 1000);
         
             // Функция загрузки сообщений чата с сервера
             function loadChat() {
@@ -123,10 +119,12 @@
                     method: 'GET',
                     success: function(response) {
                         $('#chatBody').html(response.html); // Обновление содержимого окна чата
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Ошибка при загрузке чата:', error);
                     }
                 });
             }
-        
             // Обработка отправки формы через AJAX
             $('#message-form').submit(function(event) {
                 event.preventDefault(); // Предотвращение стандартной отправки формы
@@ -137,6 +135,9 @@
                     success: function(response) {
                         $('#chatBody').html(response.html); // Обновление сообщений в чате
                         $('#message-form')[0].reset(); // Сброс формы
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Ошибка при отправке сообщения:', error);
                     }
                 });
             });

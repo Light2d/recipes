@@ -2648,6 +2648,7 @@ a:hover {
   padding: 0 20px;
   margin: 0;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   width: 100%;
   max-width: 1200px;

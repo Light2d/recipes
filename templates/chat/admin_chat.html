@@ -10,7 +10,16 @@
             <div id="chat-window">
                 {% for message in messages %}
                     <div class="message-item {% if message.sender == user %}sent{% else %}received{% endif %}">
-                        <strong>{{ message.sender.username }}:</strong> {{ message.text }}
+                        <p class="chatMessage">
+                            <strong>
+                                {% if user.aut %}
+                                    {{ message.sender.username }}
+                                {% else %}
+                                    {{ message.sender_name }}
+                                {% endif %}
+                            </strong>: {{ message.text }} 
+                            <small>{{ message.timestamp }}</small>
+                        </p>                    
                     </div>
                 {% endfor %}
             </div>

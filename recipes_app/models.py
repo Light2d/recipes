@@ -106,25 +106,28 @@ class Lesson(models.Model):
         return f"{self.name} - {self.date} {self.time} ({self.status})"
 
 class Chat(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="chats")
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="chats", null=True, blank=True)
     admin = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="admin_chats", limit_choices_to={'is_staff': True}, null=True, blank=True)
+    guest_name = models.CharField(max_length=255, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         # Проверка на наличие admin
-        admin_username = self.admin.username if self.admin else "No Admin"
+        participant = self.user.username if self.user else self.guest_name or "Guest"
+        admin_username = self.admin.username if self.admin else "No admin"
         return f"Chat between {self.user.username} and {admin_username}"
 
 class Message(models.Model):
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE, related_name="messages")
-    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    sender = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True, blank=True)
+    sender_name = models.CharField(max_length=255, null=True, blank=True)
     text = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         # Проверка на наличие sender
-        sender_username = self.sender.username if self.sender else "Unknown Sender"
-        return f"Message from {sender_username} in chat {self.chat.id}"
+        sender = self.sender.username if self.sender else self.sender_name or "Unknown Sender"
+        return f"Message from {sender} in chat {self.chat.id}"
 
 class Article(models.Model):
     name = models.CharField(max_length=100)
