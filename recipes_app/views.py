@@ -418,6 +418,18 @@ def generate_random_string(length=8):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 
+
+import requests
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from django.shortcuts import redirect, render
+from django.core.mail import send_mail
+
+def generate_random_string(length=8):
+    """Генерирует случайную строку из букв и цифр."""
+    letters_and_digits = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters_and_digits) for i in range(length))
+
 def payment(request, plan_type):
     if request.method == 'POST':
         # Получаем данные из формы
@@ -463,7 +475,6 @@ def payment(request, plan_type):
             f"Username: {random_username}\n"
             f"Password: {random_password}\n\n"
             f"Please keep this information safe.\n\n"
-            
         )
 
         # Отправка письма
@@ -475,7 +486,32 @@ def payment(request, plan_type):
             fail_silently=False,
         )
 
+        # Запись данных в Google Sheets
+        SERVICE_ACCOUNT_FILE = 'credentials.json'
+        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+        spreadsheet_id = '1oqCur7CjDEfb0TM1UnL26kkkhhCaDlLSmPj9jwQTOv4'
+        range_name = 'Sheet1!A:F'  # Диапазон для добавления данных
+
+        credentials = service_account.Credentials.from_service_account_file(
+            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+        service = build('sheets', 'v4', credentials=credentials)
+
+        values = [[first_name, last_name, email, phone_number, address, city]]
+        body = {
+            'values': values
+        }
+
+        try:
+            result = service.spreadsheets().values().append(
+                spreadsheetId=spreadsheet_id,
+                range=range_name,
+                valueInputOption='RAW',
+                body=body
+            ).execute()
+            print(f"{result.get('updates').get('updatedCells')} cells updated.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
         return redirect('login')
 
     return render(request, 'payment.html', {'plan_type': plan_type})
-
