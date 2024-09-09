@@ -445,14 +445,12 @@ def payment(request, plan_type):
         random_password = generate_random_string(12)  # Длина пароля 12 символов
 
         # Установка статуса в зависимости от выбранного уровня
-        if plan_type == 'beginner':
-            status = 'paid_beginner'
-        elif plan_type == 'basic':
-            status = 'paid_basic'
-        elif plan_type == 'pro':
-            status = 'paid_pro'
-        else:
-            status = 'not_paid'
+        status_mapping = {
+            'beginner': 'paid_beginner',
+            'basic': 'paid_basic',
+            'pro': 'paid_pro'
+        }
+        status = status_mapping.get(plan_type, 'not_paid')
 
         # Создание нового пользователя с указанными данными
         new_user = CustomUser.objects.create_user(
@@ -477,40 +475,41 @@ def payment(request, plan_type):
             f"Please keep this information safe.\n\n"
         )
 
-        # Отправка письма
-        send_mail(
-            subject,
-            message,
-            'lighttt2d@gmail.com',  # Отправитель (ваш email)
-            [email],  # Получатель (email пользователя)
-            fail_silently=False,
+        # API ключ GMass
+        api_key = '7ebec6dd-56e5-420a-aa8e-d8f59de571db'
+
+        # Создание черновика письма через GMass
+        draft_response = requests.post(
+            f'https://api.gmass.co/api/campaigndrafts?apikey={api_key}',
+            json={
+                "fromEmail": "lighttt2d@gmail.com",
+                "subject": subject,
+                "message": message,
+                "messageType": "plain",
+                "emailAddresses": email
+            },
+            headers={'Content-Type': 'application/json'}
         )
 
-        # Запись данных в Google Sheets
-        SERVICE_ACCOUNT_FILE = 'credentials.json'
-        SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-        spreadsheet_id = '1oqCur7CjDEfb0TM1UnL26kkkhhCaDlLSmPj9jwQTOv4'
-        range_name = 'Sheet1!A:F'  # Диапазон для добавления данных
+        if draft_response.status_code != 200:
+            print(f"Failed to create draft: {draft_response.text}")
+            return redirect('contacts')
 
-        credentials = service_account.Credentials.from_service_account_file(
-            SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-        service = build('sheets', 'v4', credentials=credentials)
+        draft_id = draft_response.json().get('campaignDraftId')
+        print(f"Draft ID: {draft_id}")
 
-        values = [[first_name, last_name, email, phone_number, address, city]]
-        body = {
-            'values': values
-        }
+        # Отправка письма через GMass
+        campaign_response = requests.post(
+            f'https://api.gmass.co/api/campaigns/{draft_id}?apikey={api_key}',
+            json={
+                
+            },
+            headers={'Content-Type': 'application/json'}
+        )
 
-        try:
-            result = service.spreadsheets().values().append(
-                spreadsheetId=spreadsheet_id,
-                range=range_name,
-                valueInputOption='RAW',
-                body=body
-            ).execute()
-            print(f"{result.get('updates').get('updatedCells')} cells updated.")
-        except Exception as e:
-            print(f"An error occurred: {e}")
+        if campaign_response.status_code != 200:
+            print(f"Failed to send campaign: {campaign_response.text}")
+            return redirect('contacts')
 
         return redirect('login')
 

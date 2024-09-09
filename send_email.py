@@ -1,33 +1,47 @@
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
+import requests
+import requests
+import time
 
-SERVICE_ACCOUNT_FILE = 'credentials.json'
-SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
+# Заголовки запроса
 
-# Создание объекта учетных данных
-credentials = service_account.Credentials.from_service_account_file(
-    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-
-# Создание сервиса для доступа к Google Sheets
-service = build('sheets', 'v4', credentials=credentials)
-
-# Пример использования API
-spreadsheet_id = '1oqCur7CjDEfb0TM1UnL26kkkhhCaDlLSmPj9jwQTOv4'
-range_name = 'Sheet1!A2'
-
-values = [
-    ['Example data']
-]
-body = {
-    'values': values
+# Данные черновика
+draft_data = {
+    "campaignDraftId": "",
+    "fromEmail": "lighttt2d@gmail.com",  # Укажите свой адрес электронной почты
+    "subject": "Your Subject Here",
+    "message": "Your message content here",
+    "messageType": "plain",  # Используйте "html" для HTML-сообщений, если требуется
+    "emailAddresses": "lightpavelll@gmail.com",  # Если используется список
 }
 
-# Обновление данных в Google Sheet
-result = service.spreadsheets().values().update(
-    spreadsheetId=spreadsheet_id,
-    range=range_name,
-    valueInputOption='RAW',
-    body=body
-).execute()
+# Создание черновика кампании
+draft_response = requests.post(
+    'https://api.gmass.co/api/campaigndrafts?apikey=7ebec6dd-56e5-420a-aa8e-d8f59de571db',
+    json=draft_data,
+     headers={'Content-Type': 'application/json'}
+)
 
-print(f"{result.get('updatedCells')} cells updated.")
+if draft_response.status_code == 200:
+        campaign_draft_id = draft_response.json().get('campaignDraftId')
+       
+        print("Черновик создан успешно:", campaign_draft_id)
+        
+        # Данные для отправки кампании
+        campaign_data = {
+           
+        }
+
+        # Отправка кампании через GMass
+        response = requests.post(
+            f'https://api.gmass.co/api/campaigns/{campaign_draft_id}?apikey=7ebec6dd-56e5-420a-aa8e-d8f59de571db',
+            json=campaign_data,
+            headers={'Content-Type': 'application/json'}
+        )
+
+        # Проверка ответа
+        if response.status_code == 200:
+            print("Кампания успешно отправлена")
+        else:
+            print(f"Не удалось отправить кампанию: {response.text}")
+else:
+    print(f"Не удалось создать черновик: {draft_response.text}")
